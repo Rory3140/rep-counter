@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.offWhite,
     width: "100%",
-    height: 75,
+    height: 70,
     justifyContent: "center",
     alignItems: "center",
     borderBottomWidth: 1,

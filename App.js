@@ -10,8 +10,8 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <TitleBar />
-      {/* <Home />
-      <NavBar /> */}
+      <Home />
+      <NavBar />
     </SafeAreaView>
   );
 }
