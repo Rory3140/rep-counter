@@ -3,10 +3,10 @@ import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
-export const Home = () => {
+export const Routines = () => {
   return (
     <View style={styles.container}>
-      <Text>Home</Text>
+      <Text>Routines</Text>
     </View>
   );
 };

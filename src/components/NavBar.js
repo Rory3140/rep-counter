@@ -5,15 +5,35 @@ import { SvgXml } from "react-native-svg";
 import { icons } from "../utils/svgIcons";
 import { colors } from "../utils/colors";
 
-export const NavBar = () => {
+export const NavBar = ({ changeScreen }) => {
   return (
     <View style={styles.container}>
       <View style={styles.iconWrapper}>
-        <NavIcon svg={icons.homeIcon} color={colors.darkGrey} />
-        <NavIcon svg={icons.logIcon} color={colors.darkGrey} />
-        <NavIcon svg={icons.dumbellIcon} color={colors.darkGrey} />
-        <NavIcon svg={icons.repeatIcon} color={colors.darkGrey} />
-        <NavIcon svg={icons.graphIcon} color={colors.darkGrey} />
+        <NavIcon
+          onPress={() => changeScreen("Home")}
+          svg={icons.homeIcon}
+          color={colors.darkGrey}
+        />
+        <NavIcon
+          onPress={() => changeScreen("Log")}
+          svg={icons.logIcon}
+          color={colors.darkGrey}
+        />
+        <NavIcon
+          onPress={() => changeScreen("Workout")}
+          svg={icons.dumbellIcon}
+          color={colors.darkGrey}
+        />
+        <NavIcon
+          onPress={() => changeScreen("Routines")}
+          svg={icons.repeatIcon}
+          color={colors.darkGrey}
+        />
+        <NavIcon
+          onPress={() => changeScreen("Stats")}
+          svg={icons.graphIcon}
+          color={colors.darkGrey}
+        />
       </View>
     </View>
   );
