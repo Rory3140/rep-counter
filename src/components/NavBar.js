@@ -1,15 +1,19 @@
 import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
-import { useFonts } from "expo-font";
-import { homeIcon } from "../../assets/icons/home.svg";
+import { StyleSheet, View } from "react-native";
+import { NavIcon } from "../components/NavIcon";
+import { SvgXml } from "react-native-svg";
+import { icons } from "../utils/svgIcons";
 import { colors } from "../utils/colors";
-import { sizes, fontSizes } from "../utils/spacing";
 
 export const NavBar = () => {
   return (
     <View style={styles.container}>
       <View style={styles.iconWrapper}>
-        <homeIcon style={styles.icon} />
+        <NavIcon svg={icons.homeIcon} color={colors.darkGrey} />
+        <NavIcon svg={icons.logIcon} color={colors.darkGrey} />
+        <NavIcon svg={icons.dumbellIcon} color={colors.darkGrey} />
+        <NavIcon svg={icons.repeatIcon} color={colors.darkGrey} />
+        <NavIcon svg={icons.graphIcon} color={colors.darkGrey} />
       </View>
     </View>
   );
@@ -25,15 +29,11 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: colors.lightGrey,
   },
-
   iconWrapper: {
-    width: 60,
+    width: "95%",
     height: 60,
-  },
-
-  icon: {
-    width: 60,
-    height: 60,
-    color: colors.black,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
   },
 });
