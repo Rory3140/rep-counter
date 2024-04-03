@@ -5,7 +5,7 @@ import { SvgXml } from "react-native-svg";
 export const NavIcon = ({ svg, color, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <SvgXml xml={svg} width={60} height={60} fill={color} stroke={color} />
+      <SvgXml xml={svg} width={50} height={50} fill={color} stroke={color} />
     </TouchableOpacity>
   );
 };
