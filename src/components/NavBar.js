@@ -1,39 +1,48 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { NavIcon } from "../components/NavIcon";
-import { SvgXml } from "react-native-svg";
-import { icons } from "../utils/svgIcons";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
+
 import { colors } from "../utils/colors";
+
+import Home from "../../assets/icons/home";
+import Log from "../../assets/icons/log";
+import Workout from "../../assets/icons/dumbell";
+import Routines from "../../assets/icons/repeat";
+import Stats from "../../assets/icons/graph";
 
 export const NavBar = ({ changeScreen }) => {
   return (
     <View style={styles.container}>
       <View style={styles.iconWrapper}>
-        <NavIcon
-          onPress={() => changeScreen("Home")}
-          svg={icons.homeIcon}
-          color={colors.darkGrey}
-        />
-        <NavIcon
-          onPress={() => changeScreen("Log")}
-          svg={icons.logIcon}
-          color={colors.darkGrey}
-        />
-        <NavIcon
-          onPress={() => changeScreen("Workout")}
-          svg={icons.dumbellIcon}
-          color={colors.darkGrey}
-        />
-        <NavIcon
-          onPress={() => changeScreen("Routines")}
-          svg={icons.repeatIcon}
-          color={colors.darkGrey}
-        />
-        <NavIcon
-          onPress={() => changeScreen("Stats")}
-          svg={icons.graphIcon}
-          color={colors.darkGrey}
-        />
+        <TouchableOpacity onPress={() => changeScreen("Home")}>
+          <Home
+            width={50}
+            height={50}
+            fill={colors.darkGrey}
+            storke={colors.darkGrey}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => changeScreen("Log")}>
+          <Log
+            width={50}
+            height={50}
+            fill={colors.darkGrey}
+            storke={colors.darkGrey}
+
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => changeScreen("Workout")}>
+          <Workout width={50} height={50} fill={colors.darkGrey} />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => changeScreen("Routines")}>
+          <Routines width={50} height={50} fill={colors.darkGrey} />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => changeScreen("Stats")}>
+          <Stats width={50} height={50} fill={colors.darkGrey} />
+        </TouchableOpacity>
       </View>
     </View>
   );

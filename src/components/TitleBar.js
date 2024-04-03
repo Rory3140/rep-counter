@@ -15,6 +15,7 @@ export const TitleBar = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Rep-Counter</Text>
+      
     </View>
   );
 };
