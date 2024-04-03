@@ -1,10 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useFonts } from "expo-font";
+
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
-export const TitleBar = () => {
+import Profile from "../../assets/icons/profile";
+
+export const TitleBar = ({ changeScreen }) => {
   const [fontsLoaded] = useFonts({
     norwester: require("../../assets/fonts/norwester.ttf"),
   });
@@ -15,14 +18,20 @@ export const TitleBar = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Rep-Counter</Text>
-      
+      <TouchableOpacity
+        style={styles.profileIconWrapper}
+        onPress={() => changeScreen("Profile")}
+      >
+        <Profile width={50} height={50} fill={colors.darkGrey} />
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.offWhite,
+    flexDirection: "row",
+    backgroundColor: colors.white,
     width: "100%",
     height: 70,
     justifyContent: "center",
@@ -36,4 +45,10 @@ const styles = StyleSheet.create({
     color: colors.black,
     fontSize: fontSizes.xxl,
   },
+
+  profileIconWrapper: {
+    position: "absolute",
+    right: sizes.sm,
+  },
+
 });

@@ -9,39 +9,28 @@ import Workout from "../../assets/icons/dumbell";
 import Routines from "../../assets/icons/repeat";
 import Stats from "../../assets/icons/graph";
 
-export const NavBar = ({ changeScreen }) => {
+export const NavBar = ({ changeScreen, currentScreen }) => {
   return (
     <View style={styles.container}>
       <View style={styles.iconWrapper}>
         <TouchableOpacity onPress={() => changeScreen("Home")}>
-          <Home
-            width={50}
-            height={50}
-            fill={colors.darkGrey}
-            storke={colors.darkGrey}
-          />
+          <Home width={50} height={50} fill={currentScreen === "Home" ? colors.darkGrey : colors.grey} />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => changeScreen("Log")}>
-          <Log
-            width={50}
-            height={50}
-            fill={colors.darkGrey}
-            storke={colors.darkGrey}
-
-          />
+          <Log width={50} height={50} fill={currentScreen === "Log" ? colors.darkGrey : colors.grey} />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => changeScreen("Workout")}>
-          <Workout width={50} height={50} fill={colors.darkGrey} />
+          <Workout width={50} height={50} fill={currentScreen === "Workout" ? colors.darkGrey : colors.grey} />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => changeScreen("Routines")}>
-          <Routines width={50} height={50} fill={colors.darkGrey} />
+          <Routines width={50} height={50} fill={currentScreen === "Routines" ? colors.darkGrey : colors.grey} />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => changeScreen("Stats")}>
-          <Stats width={50} height={50} fill={colors.darkGrey} />
+          <Stats width={50} height={50} fill={currentScreen === "Stats" ? colors.darkGrey : colors.grey} />
         </TouchableOpacity>
       </View>
     </View>
@@ -50,7 +39,7 @@ export const NavBar = ({ changeScreen }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.offWhite,
+    backgroundColor: colors.white,
     height: 70,
     width: "100%",
     justifyContent: "center",
@@ -58,9 +47,9 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: colors.lightGrey,
   },
+
   iconWrapper: {
     width: "95%",
-    height: 60,
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",

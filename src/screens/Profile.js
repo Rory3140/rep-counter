@@ -4,10 +4,10 @@ import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
-export const Log = () => {
+export const Profile = () => {
   return (
     <View style={styles.container}>
-      <Text>Log</Text>
+      <Text>Profile</Text>
     </View>
   );
 };
