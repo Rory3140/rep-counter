@@ -24,7 +24,7 @@ export default function App() {
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
-        <TitleBar changeScreen={changeScreen} />
+        <TitleBar changeScreen={changeScreen} currentScreen={currentScreen} />
         {currentScreen === "Home" && <Home />}
         {currentScreen === "Log" && <Log />}
         {currentScreen === "Workout" && <Workout />}
