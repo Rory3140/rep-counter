@@ -1,17 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 
-import { TitleBar } from "../components/TitleBar";
-
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
-export const Login = () => {
+export const RegisterScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <TitleBar />
       <View style={styles.container}>
-        <Text>Login</Text>
+        <Text>Register</Text>
       </View>
     </SafeAreaView>
   );

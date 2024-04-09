@@ -6,7 +6,7 @@ import { ScreenContainer } from "../components/ScreenContainer";
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
-export const Profile = () => {
+export const ProfileScreen = () => {
   return (
     <ScreenContainer>
       <Text>Profile</Text>

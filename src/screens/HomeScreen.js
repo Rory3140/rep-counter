@@ -7,7 +7,7 @@ import { ScreenContainer } from "../components/ScreenContainer";
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
-export const Home = () => {
+export const HomeScreen = () => {
   return (
     <ScreenContainer>
       <Container style={styles.workoutStreakWrapper}>

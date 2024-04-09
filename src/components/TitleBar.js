@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useFonts } from "expo-font";
-import { NavigationContainer } from "@react-navigation/native";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";

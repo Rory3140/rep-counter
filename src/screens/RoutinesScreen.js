@@ -6,10 +6,10 @@ import { ScreenContainer } from "../components/ScreenContainer";
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
-export const Workout = () => {
+export const RoutinesScreen = () => {
   return (
     <ScreenContainer>
-      <Text>Workout</Text>
+      <Text>Routines</Text>
     </ScreenContainer>
   );
 };
