@@ -2,16 +2,14 @@ import React from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 
 import { Container } from "../components/Container";
-import { TitleBar } from "../components/TitleBar";
+import { ScreenContainer } from "../components/ScreenContainer";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
 export const Home = () => {
   return (
-    <SafeAreaView style={styles.container}>
-      <TitleBar />
-      <View style={styles.container}>
+    <ScreenContainer>
       <Container style={styles.workoutStreakWrapper}>
         <Text>Workout Streak</Text>
       </Container>
@@ -27,20 +25,11 @@ export const Home = () => {
       <Container style={styles.statsWrapper}>
         <Text>Stats</Text>
       </Container>
-      </View>
-    </SafeAreaView>
+    </ScreenContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.offWhite,
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
-
   workoutStreakWrapper: {
     flex: 1,
   },
@@ -54,6 +43,6 @@ const styles = StyleSheet.create({
   },
 
   statsWrapper: {
-    flex : 1,
+    flex: 1,
   },
 });

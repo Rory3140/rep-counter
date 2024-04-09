@@ -1,9 +1,8 @@
-import * as React from "react";
-import { StyleSheet, StatusBar, Platform } from "react-native";
+import React from "react";
+import { StyleSheet, StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { TitleBar } from "./src/components/TitleBar";
 import { Home } from "./src/screens/Home";
 import { Log } from "./src/screens/Log";
 import { Workout } from "./src/screens/Workout";
@@ -80,17 +79,6 @@ export default function App() {
           />
         </Tab.Navigator>
       </NavigationContainer>
-
-      {/* <SafeAreaView style={styles.container}>
-        <TitleBar changeScreen={changeScreen} currentScreen={currentScreen} />
-        {currentScreen === "Home" && <Home />}
-        {currentScreen === "Log" && <Log />}
-        {currentScreen === "Workout" && <Workout />}
-        {currentScreen === "Routines" && <Routines />}
-        {currentScreen === "Stats" && <Stats />}
-        {currentScreen === "Profile" && <Profile />}
-        <NavBar changeScreen={changeScreen} currentScreen={currentScreen} />
-      </SafeAreaView> */}
     </>
   );
 }
