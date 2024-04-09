@@ -10,13 +10,21 @@ export const ScreenContainer = ({ children }) => {
   return (
     <SafeAreaView style={styles.container}>
       <TitleBar />
-      <View style={styles.container}>{children}</View>
+      <View style={styles.innerContainer}>{children}</View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: colors.white,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  innerContainer: {
     flex: 1,
     backgroundColor: colors.offWhite,
     width: "100%",

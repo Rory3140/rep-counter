@@ -13,8 +13,8 @@ export default function App() {
     <>
       <StatusBar barStyle="dark-content" />
       <NavigationContainer style={styles.container}>
-        {/* <AppStack /> */}
-        <AuthStack />
+        <AppStack />
+        {/* <AuthStack /> */}
       </NavigationContainer>
     </>
   );

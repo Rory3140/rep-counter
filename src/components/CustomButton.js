@@ -9,7 +9,7 @@ export const CustomButton = ({ label, onPress }) => {
     <TouchableOpacity
       onPress={onPress}
       style={{
-        backgroundColor: "colors.purple",
+        backgroundColor: colors.primary,
         padding: 20,
         borderRadius: 10,
         marginBottom: 30,

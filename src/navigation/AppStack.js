@@ -26,6 +26,8 @@ export const AppStack = () => {
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
+        tabBarInactiveTintColor: colors.gray,
+        tabBarActiveTintColor: colors.primary,
       }}
     >
       <Tab.Screen

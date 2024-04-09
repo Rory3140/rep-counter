@@ -10,8 +10,6 @@ import {
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-// import LoginSVG from "../assets/images/misc/login.svg";
-
 import { CustomButton } from "../components/CustomButton";
 import { InputField } from "../components/InputField";
 import { colors } from "../utils/colors";
@@ -40,7 +38,7 @@ export const LoginScreen = ({ navigation }) => {
         </Text>
 
         <InputField
-          label={"Email ID"}
+          label={"Email"}
           icon={
             <MaterialIcons
               name="alternate-email"
@@ -76,7 +74,7 @@ export const LoginScreen = ({ navigation }) => {
         >
           <Text>New to the app?</Text>
           <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-            <Text style={{ color: colors.purple, fontWeight: "700" }}>
+            <Text style={{ color: colors.primary, fontWeight: "700" }}>
               {" "}
               Register
             </Text>
