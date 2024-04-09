@@ -7,7 +7,7 @@ import { sizes, fontSizes } from "../utils/spacing";
 
 import Profile from "../../assets/icons/profile";
 
-export const TitleBar = ({ changeScreen, currentScreen }) => {
+export const TitleBar = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     norwester: require("../../assets/fonts/norwester.ttf"),
   });
@@ -18,14 +18,12 @@ export const TitleBar = ({ changeScreen, currentScreen }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Rep-Counter</Text>
-      {currentScreen !== "Profile" && (
-        <TouchableOpacity
-          style={styles.profileIconWrapper}
-          onPress={() => changeScreen("Profile")}
-        >
-          <Profile width={50} height={50} fill={colors.darkGrey} />
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity
+        style={styles.profileIconWrapper}
+        onPress={() => navigation.navigate("Profile")}
+      >
+        <Profile width={50} height={50} fill={colors.darkGrey} />
+      </TouchableOpacity>
     </View>
   );
 };

@@ -1,14 +1,16 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
-export const Log = () => {
+export const RegisterScreen = () => {
   return (
-    <View style={styles.container}>
-      <Text>Log</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
+        <Text>Register</Text>
+      </View>
+    </SafeAreaView>
   );
 };
 
