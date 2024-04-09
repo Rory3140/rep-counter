@@ -1,14 +1,19 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+
+import { TitleBar } from "../components/TitleBar";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
-export const Profile = () => {
+export const Login = () => {
   return (
-    <View style={styles.container}>
-      <Text>Login</Text>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <TitleBar />
+      <View style={styles.container}>
+        <Text>Login</Text>
+      </View>
+    </SafeAreaView>
   );
 };
 

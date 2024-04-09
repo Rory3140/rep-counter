@@ -1,13 +1,14 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { useFonts } from "expo-font";
+import { NavigationContainer } from "@react-navigation/native";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
 import Profile from "../../assets/icons/profile";
 
-export const TitleBar = ({ changeScreen, currentScreen }) => {
+export const TitleBar = ({ navigation }) => {
   const [fontsLoaded] = useFonts({
     norwester: require("../../assets/fonts/norwester.ttf"),
   });
@@ -18,14 +19,12 @@ export const TitleBar = ({ changeScreen, currentScreen }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Rep-Counter</Text>
-      {currentScreen !== "Profile" && (
-        <TouchableOpacity
-          style={styles.profileIconWrapper}
-          onPress={() => changeScreen("Profile")}
-        >
-          <Profile width={50} height={50} fill={colors.darkGrey} />
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity
+        style={styles.profileIconWrapper}
+        onPress={() => navigation.navigate("Profile")}
+      >
+        <Profile width={50} height={50} fill={colors.darkGrey} />
+      </TouchableOpacity>
     </View>
   );
 };
