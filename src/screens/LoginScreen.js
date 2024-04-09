@@ -1,31 +1,20 @@
-import React from "react";
-import {
-  SafeAreaView,
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-
+import React, { useContext } from "react";
+import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { CustomButton } from "../components/CustomButton";
 import { InputField } from "../components/InputField";
+import { AuthContext } from "../context/AuthContext";
+
 import { colors } from "../utils/colors";
 
 export const LoginScreen = ({ navigation }) => {
+  const { login } = useContext(AuthContext);
+
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
       <View style={{ paddingHorizontal: 25 }}>
-        <View style={{ alignItems: "center" }}>
-          {/* <LoginSVG
-            height={300}
-            width={300}
-            style={{ transform: [{ rotate: "-5deg" }] }}
-          /> */}
-        </View>
-
         <Text
           style={{
             fontSize: 28,
@@ -63,7 +52,12 @@ export const LoginScreen = ({ navigation }) => {
           inputType="password"
         />
 
-        <CustomButton label={"Login"} onPress={() => {}} />
+        <CustomButton
+          label={"Login"}
+          onPress={() => {
+            login();
+          }}
+        />
 
         <View
           style={{

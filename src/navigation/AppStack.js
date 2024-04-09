@@ -1,12 +1,15 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import { HomeScreen } from "../screens/HomeScreen";
 import { LogScreen } from "../screens/LogScreen";
 import { WorkoutScreen } from "../screens/WorkoutScreen";
 import { RoutinesScreen } from "../screens/RoutinesScreen";
 import { StatsScreen } from "../screens/StatsScreen";
+import { ProfileScreen } from "../screens/ProfileScreen";
+import { TitleBar } from "../components/TitleBar";
 
 import HomeIcon from "../../assets/icons/home";
 import LogIcon from "../../assets/icons/log";
@@ -19,12 +22,14 @@ import { sizes, fontSizes } from "../utils/spacing";
 
 const Tab = createBottomTabNavigator();
 
+function AppTabs() {}
+
 export const AppStack = () => {
   return (
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        headerShown: false,
+        header: () => <TitleBar />,
         tabBarShowLabel: false,
         tabBarInactiveTintColor: colors.gray,
         tabBarActiveTintColor: colors.primary,
@@ -73,6 +78,13 @@ export const AppStack = () => {
           tabBarIcon: ({ color }) => (
             <StatsIcon width={50} height={50} fill={color} />
           ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          tabBarButton: () => null,
         }}
       />
     </Tab.Navigator>

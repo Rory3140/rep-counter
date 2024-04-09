@@ -9,6 +9,8 @@ import {
 import { useFonts } from "expo-font";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
+import { Title } from "../components/Title";
+
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
@@ -22,7 +24,7 @@ export const OnboardingScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Rep-Counter</Text>
+      <Title />
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("Login")}
@@ -41,12 +43,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "space-evenly",
-  },
-
-  title: {
-    fontFamily: "norwester",
-    color: colors.black,
-    fontSize: fontSizes.xxl,
   },
 
   button: {
