@@ -13,11 +13,9 @@
     "@react-navigation/native-stack": "^6.9.26",
     "expo": "~50.0.11",
     "expo-status-bar": "~1.11.1",
-    "firebase": "^10.10.0",
     "react": "18.2.0",
     "react-native": "0.73.4",
-    "react-native-svg": "^15.1.0",
-    "react-native-ui-lib": "^7.19.0"
+    "react-native-svg": "^15.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
