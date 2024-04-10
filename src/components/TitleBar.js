@@ -21,12 +21,13 @@ export const TitleBar = () => {
   const [fontsLoaded] = useFonts({
     norwester: require("../../assets/fonts/norwester.ttf"),
   });
+  
+  const navigation = useNavigation();
+  
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
-
-  const navigation = useNavigation();
-
+  
   return (
     <View style={styles.container}>
       <Title />

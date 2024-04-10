@@ -15,7 +15,7 @@ export const AppNav = () => {
   if (isLoading) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color={colors.primary}/>
       </View>
     );
   }

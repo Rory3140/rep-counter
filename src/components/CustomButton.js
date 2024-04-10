@@ -13,6 +13,7 @@ export const CustomButton = ({ label, onPress }) => {
         padding: 20,
         borderRadius: 10,
         marginBottom: 30,
+        width: "95%",
       }}
     >
       <Text
