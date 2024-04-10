@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import { BASE_URL } from "../../config";
 
 export const AuthContext = createContext();
 
@@ -10,11 +12,16 @@ export const AuthProvider = ({ children }) => {
   const login = (email, password) => {
     console.log(email, password);
     setIsLoading(true);
-    setTimeout(() => {
-      setUserToken("token");
-      AsyncStorage.setItem("userToken", "token");
-      setIsLoading(false);
-    }, 1000);
+    axios.post(`${BASE_URL}/login`, { email, password })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // setUserToken("token");
+    // AsyncStorage.setItem("userToken", "token");
+    setIsLoading(false);
   };
 
   const logout = () => {
@@ -26,14 +33,14 @@ export const AuthProvider = ({ children }) => {
     }, 1000);
   };
 
-  const isLoggedIn = async () => { 
+  const isLoggedIn = async () => {
     setIsLoading(true);
     const token = await AsyncStorage.getItem("userToken");
     if (token) {
       setUserToken(token);
     }
     setIsLoading(false);
-  }
+  };
 
   useEffect(() => {
     isLoggedIn();
