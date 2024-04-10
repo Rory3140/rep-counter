@@ -7,7 +7,8 @@ export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const login = () => {
+  const login = (email, password) => {
+    console.log(email, password);
     setIsLoading(true);
     setTimeout(() => {
       setUserToken("token");
