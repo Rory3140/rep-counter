@@ -1,13 +1,23 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+  Platform,
+  StatusBar,
+} from "react-native";
 import { useFonts } from "expo-font";
+import { useNavigation } from "@react-navigation/native";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
 import Profile from "../../assets/icons/profile";
+import { Title } from "./Title";
 
-export const TitleBar = ({ navigation }) => {
+export const TitleBar = () => {
   const [fontsLoaded] = useFonts({
     norwester: require("../../assets/fonts/norwester.ttf"),
   });
@@ -15,9 +25,11 @@ export const TitleBar = ({ navigation }) => {
     return <Text>Loading...</Text>;
   }
 
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Rep-Counter</Text>
+      <Title />
       <TouchableOpacity
         style={styles.profileIconWrapper}
         onPress={() => navigation.navigate("Profile")}
@@ -33,21 +45,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: colors.white,
     width: "100%",
-    height: 70,
     justifyContent: "center",
     alignItems: "center",
     borderBottomWidth: 1,
     borderBottomColor: colors.lightGrey,
-  },
-
-  title: {
-    fontFamily: "norwester",
-    color: colors.black,
-    fontSize: fontSizes.xxl,
+    paddingTop: Platform.OS === "ios" ? 50 : 0,
+    height: Platform.OS === "ios" ? 120 : 80,
   },
 
   profileIconWrapper: {
     position: "absolute",
-    right: sizes.sm,
+    right: 10,
+    top: Platform.OS === "ios" ? 60 : 20,
   },
 });
