@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { SafeAreaView, View, Text, TouchableOpacity } from "react-native";
+import React, { useContext, useState } from "react";
+import { View, Text, TouchableOpacity, KeyboardAvoidingView } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -10,10 +10,12 @@ import { AuthContext } from "../context/AuthContext";
 import { colors } from "../utils/colors";
 
 export const LoginScreen = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { login } = useContext(AuthContext);
 
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: "center" }}>
+    <KeyboardAvoidingView style={{ flex: 1, justifyContent: "center" }}>
       <View style={{ paddingHorizontal: 25 }}>
         <Text
           style={{
@@ -36,6 +38,8 @@ export const LoginScreen = ({ navigation }) => {
               style={{ marginRight: 5 }}
             />
           }
+          value={email}
+          onChangeText={(text) => setEmail(text)}
           keyboardType="email-address"
         />
 
@@ -49,13 +53,15 @@ export const LoginScreen = ({ navigation }) => {
               style={{ marginRight: 5 }}
             />
           }
+          value={password}
+          onChangeText={(text) => setPassword(text)}
           inputType="password"
         />
 
         <CustomButton
           label={"Login"}
           onPress={() => {
-            login();
+            login(email, password, setPassword);
           }}
         />
 
@@ -75,6 +81,6 @@ export const LoginScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 };
