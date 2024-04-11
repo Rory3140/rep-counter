@@ -20,7 +20,9 @@ export const AuthStack = () => {
         options={{
           headerShown: true,
           headerTitle: "Create an Account",
-          headerTitleStyle: { color: colors.black },
+          headerTitleStyle: {
+            color: colors.black,
+          },
           headerTintColor: colors.primary,
         }}
       />
