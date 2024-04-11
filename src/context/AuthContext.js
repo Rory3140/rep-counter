@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
 
-  const login = (email, password, setEmail, setPassword) => {
+  const login = (email, password, setPassword) => {
     setIsLoading(true);
     axios
       .post(`https://login-yet5ypcxwq-uc.a.run.app`, { email, password })
@@ -35,7 +35,6 @@ export const AuthProvider = ({ children }) => {
           default:
             break;
         }
-        setEmail("");
         setPassword("");
         alert(err.response.data.message);
         console.log(err.response.data);

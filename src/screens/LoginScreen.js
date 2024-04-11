@@ -61,7 +61,7 @@ export const LoginScreen = ({ navigation }) => {
         <CustomButton
           label={"Login"}
           onPress={() => {
-            login(email, password, setEmail, setPassword);
+            login(email, password, setPassword);
           }}
         />
 
