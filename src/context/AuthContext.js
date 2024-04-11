@@ -1,33 +1,54 @@
 import React, { createContext, useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { BASE_URL } from "../../config";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [userToken, setUserToken] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [userToken, setUserToken] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
 
-  const login = (email, password) => {
-    console.log(email, password);
+  const login = (email, password, setEmail, setPassword) => {
     setIsLoading(true);
-    axios.post(`${BASE_URL}/login`, { email, password })
+    axios
+      .post(`https://login-yet5ypcxwq-uc.a.run.app`, { email, password })
       .then((res) => {
-        console.log(res.data);
+        let userInfo = res.data;
+        setUserInfo(userInfo);
+        let userToken = userInfo.user.uid;
+        setUserToken(userToken);
+        AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+        AsyncStorage.setItem("userToken", userToken);
       })
       .catch((err) => {
-        console.log(err);
+        switch (err.response.data.code) {
+          case "auth/internal-error":
+            err.response.data.message = "Incorrect email or password";
+            break;
+          case "auth/invalid-email":
+            err.response.data.message = "Invalid email address";
+            break;
+          case "auth/wrong-password":
+            err.response.data.message = "Incorrect password";
+            break;
+          default:
+            break;
+        }
+        setEmail("");
+        setPassword("");
+        alert(err.response.data.message);
+        console.log(err.response.data);
       });
-    // setUserToken("token");
-    // AsyncStorage.setItem("userToken", "token");
     setIsLoading(false);
   };
 
   const logout = () => {
     setIsLoading(true);
     setTimeout(() => {
+      setUserInfo(null);
       setUserToken(null);
+      AsyncStorage.removeItem("userInfo");
       AsyncStorage.removeItem("userToken");
       setIsLoading(false);
     }, 1000);
@@ -35,9 +56,14 @@ export const AuthProvider = ({ children }) => {
 
   const isLoggedIn = async () => {
     setIsLoading(true);
-    const token = await AsyncStorage.getItem("userToken");
+    let token = await AsyncStorage.getItem("userToken");
+    let userInfo = await AsyncStorage.getItem("userInfo");
+
     if (token) {
       setUserToken(token);
+    }
+    if (userInfo) {
+      setUserInfo(JSON.parse(userInfo));
     }
     setIsLoading(false);
   };
@@ -47,7 +73,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ login, logout, isLoading, userToken }}>
+    <AuthContext.Provider
+      value={{ login, logout, isLoading, userToken, userInfo }}
+    >
       {children}
     </AuthContext.Provider>
   );
