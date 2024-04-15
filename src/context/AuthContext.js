@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   const login = (email, password, setPassword) => {
     setIsLoading(true);
@@ -20,6 +21,7 @@ export const AuthProvider = ({ children }) => {
         setUserToken(userToken);
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         AsyncStorage.setItem("userToken", userToken);
+        // get user data
       })
       .catch((err) => {
         setPassword("");
@@ -50,6 +52,7 @@ export const AuthProvider = ({ children }) => {
         setUserToken(userToken);
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         AsyncStorage.setItem("userToken", userToken);
+        // get user data
       })
       .catch((err) => {
         setPassword("");
@@ -67,8 +70,29 @@ export const AuthProvider = ({ children }) => {
       setUserToken(null);
       AsyncStorage.removeItem("userInfo");
       AsyncStorage.removeItem("userToken");
+      // remove user data
       setIsLoading(false);
     }, 1000);
+  };
+
+  const updateProfile = async (height, weight) => {
+    setIsLoading(true);
+    axios
+      .post(`https://update-profile-yet5ypcxwq-uc.a.run.app`, {
+        height,
+        weight,
+        userToken,
+      })
+      .then((res) => {
+        const userData = res.data;
+        setUserData(userData);
+        
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+        console.log(err.response.data);
+      });
+    setIsLoading(false);
   };
 
   const isLoggedIn = async () => {
@@ -91,7 +115,15 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ login, signup, logout, isLoading, userToken, userInfo }}
+      value={{
+        login,
+        signup,
+        updateProfile,
+        logout,
+        isLoading,
+        userToken,
+        userInfo,
+      }}
     >
       {children}
     </AuthContext.Provider>

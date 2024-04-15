@@ -14,6 +14,10 @@ export const ProfileScreen = () => {
 
   return (
     <ScreenContainer>
+      <Container>
+        <Text>Profile</Text>
+        
+      </Container>
       <CustomButton
         label={"logout"}
         onPress={() => {
