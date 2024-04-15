@@ -5,21 +5,27 @@ import {
   View,
   Text,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { useFonts } from "expo-font";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import { Title } from "../components/Title";
+import { Loading } from "../components/Loading";
+import { AuthContext } from "../context/AuthContext";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
 export const OnboardingScreen = ({ navigation }) => {
+  const { isLoading } = React.useContext(AuthContext);
+
   const [fontsLoaded] = useFonts({
     norwester: require("../../assets/fonts/norwester.ttf"),
   });
-  if (!fontsLoaded) {
-    return <Text>Loading...</Text>;
+
+  if (isLoading || !fontsLoaded) {
+    return <Loading />;
   }
 
   return (

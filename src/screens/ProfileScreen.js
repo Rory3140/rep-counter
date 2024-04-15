@@ -57,7 +57,7 @@ export const ProfileScreen = () => {
                 alert("Please enter your height and weight");
                 return;
               }
-              updateProfile(height, weight);
+              updateProfile(height, weight, setHeight, setWeight);
             }}
           />
         )}

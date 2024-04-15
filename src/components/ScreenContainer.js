@@ -1,12 +1,24 @@
 import React from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+} from "react-native";
 
-import { TitleBar } from "../components/TitleBar";
+import { Loading } from "../components/Loading";
+import { AuthContext } from "../context/AuthContext";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
 export const ScreenContainer = ({ style, children }) => {
+  const { isLoading } = React.useContext(AuthContext);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.innerContainer, style]}>{children}</View>

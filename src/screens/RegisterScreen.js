@@ -4,12 +4,14 @@ import {
   Text,
   TouchableOpacity,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { CustomButton } from "../components/CustomButton";
 import { InputField } from "../components/InputField";
+import { Loading } from "../components/Loading";
 import { AuthContext } from "../context/AuthContext";
 
 import { colors } from "../utils/colors";
@@ -19,7 +21,11 @@ export const RegisterScreen = () => {
   const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const { signup } = useContext(AuthContext);
+  const { signup, isLoading } = useContext(AuthContext);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <KeyboardAvoidingView style={{ flex: 1, justifyContent: "center" }}>

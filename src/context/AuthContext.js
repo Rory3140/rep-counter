@@ -72,6 +72,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const getUserData = (uid) => {
+    setIsLoading(true);
     return axios
       .post(`https://getuserdata-yet5ypcxwq-uc.a.run.app`, { uid })
       .then((res) => {
@@ -81,10 +82,13 @@ export const AuthProvider = ({ children }) => {
       .catch((err) => {
         alert(err.response.data.message);
         console.log(err.response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
-  const updateProfile = (height, weight) => {
+  const updateProfile = (height, weight, setHeight, setWeight) => {
     setIsLoading(true);
     return axios
       .post(`https://updateprofile-yet5ypcxwq-uc.a.run.app`, {
@@ -103,6 +107,8 @@ export const AuthProvider = ({ children }) => {
         console.log(err.response.data);
       })
       .finally(() => {
+        setHeight("");
+        setWeight("");
         setIsLoading(false);
       });
   };

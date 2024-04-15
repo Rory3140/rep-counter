@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, ActivityIndicator, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
 import { AuthStack } from "./AuthStack";
@@ -10,15 +10,7 @@ import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
 export const AppNav = () => {
-  const { isLoading, userToken } = useContext(AuthContext);
-
-  if (isLoading) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color={colors.primary}/>
-      </View>
-    );
-  }
+  const {userToken } = useContext(AuthContext);
 
   return (
     <NavigationContainer style={styles.container}>
