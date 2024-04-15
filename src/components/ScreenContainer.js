@@ -6,10 +6,10 @@ import { TitleBar } from "../components/TitleBar";
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
-export const ScreenContainer = ({ children }) => {
+export const ScreenContainer = ({ style, children }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.innerContainer}>{children}</View>
+      <View style={[styles.innerContainer, style]}>{children}</View>
     </SafeAreaView>
   );
 };
