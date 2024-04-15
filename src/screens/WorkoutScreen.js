@@ -7,7 +7,6 @@ import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 import { Container } from "../components/Container";
 import { CustomButton } from "../components/CustomButton";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import { useState } from "react";
 import { InputField } from "../components/InputField";
 
@@ -23,11 +22,11 @@ export const WorkoutScreen = () => {
       <Container style={styles.infoContainer}>
         <Container style={styles.textbox}>
           <InputField
-            style={styles.text}
             label={"Workout Name"}
             keyboardType="default"
             value={workoutName}
             onChangeText={handleWorkoutNameChange}
+            style={{ marginBottom: 0 }}
           />
         </Container>
         <Container style={styles.textbox}>
@@ -75,11 +74,11 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     justifyContent: "left",
     alignItems: "center",
+    padding: 0,
   },
 
   text: {
     marginLeft: 10,
-    bottomborderwidth: 0,
   },
 
   exersiceContainer: {
