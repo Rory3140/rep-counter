@@ -16,6 +16,7 @@ import { colors } from "../utils/colors";
 
 export const RegisterScreen = () => {
   const [email, setEmail] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { signup } = useContext(AuthContext);
@@ -46,6 +47,21 @@ export const RegisterScreen = () => {
           }
           value={email}
           onChangeText={(text) => setEmail(text)}
+          keyboardType="email-address"
+        />
+
+        <InputField
+          label={"Display Name"}
+          icon={
+            <MaterialIcons
+              name="person-outline"
+              size={20}
+              color="#666"
+              style={{ marginRight: 5 }}
+            />
+          }
+          value={displayName}
+          onChangeText={(text) => setDisplayName(text)}
           keyboardType="email-address"
         />
 
@@ -88,7 +104,13 @@ export const RegisterScreen = () => {
               setConfirmPassword("");
               return;
             } else {
-              signup(email, password, setPassword, setConfirmPassword);
+              signup(
+                email,
+                displayName,
+                password,
+                setPassword,
+                setConfirmPassword
+              );
             }
           }}
         />

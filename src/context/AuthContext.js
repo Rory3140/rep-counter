@@ -29,10 +29,20 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   };
 
-  const signup = (email, password, setPassword, setConfirmPassword) => {
+  const signup = (
+    email,
+    displayName,
+    password,
+    setPassword,
+    setConfirmPassword
+  ) => {
     setIsLoading(true);
     axios
-      .post(`https://signup-yet5ypcxwq-uc.a.run.app`, { email, password })
+      .post(`https://signup-yet5ypcxwq-uc.a.run.app`, {
+        email,
+        displayName,
+        password,
+      })
       .then((res) => {
         const userInfo = res.data;
         setUserInfo(userInfo);
