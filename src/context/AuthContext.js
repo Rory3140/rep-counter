@@ -90,6 +90,11 @@ export const AuthProvider = ({ children }) => {
 
   const updateProfile = (height, weight, setHeight, setWeight) => {
     setIsLoading(true);
+    if (height === "") {
+      height = userData.height;
+    } else if (weight === "") {
+      weight = userData.weight;
+    }
     return axios
       .post(`https://updateprofile-yet5ypcxwq-uc.a.run.app`, {
         uid: userToken,

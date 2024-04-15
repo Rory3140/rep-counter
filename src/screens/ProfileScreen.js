@@ -53,10 +53,6 @@ export const ProfileScreen = () => {
           <CustomButton
             label={"Update"}
             onPress={() => {
-              if (height === "" || weight === "") {
-                alert("Please enter your height and weight");
-                return;
-              }
               updateProfile(height, weight, setHeight, setWeight);
             }}
           />
