@@ -14,28 +14,46 @@ export const AuthProvider = ({ children }) => {
     axios
       .post(`https://login-yet5ypcxwq-uc.a.run.app`, { email, password })
       .then((res) => {
-        let userInfo = res.data;
+        const userInfo = res.data;
         setUserInfo(userInfo);
-        let userToken = userInfo.user.uid;
+        const userToken = userInfo.user.uid;
         setUserToken(userToken);
         AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         AsyncStorage.setItem("userToken", userToken);
       })
       .catch((err) => {
-        switch (err.response.data.code) {
-          case "auth/internal-error":
-            err.response.data.message = "Incorrect email or password";
-            break;
-          case "auth/invalid-email":
-            err.response.data.message = "Invalid email address";
-            break;
-          case "auth/wrong-password":
-            err.response.data.message = "Incorrect password";
-            break;
-          default:
-            break;
-        }
         setPassword("");
+        alert(err.response.data.message);
+        console.log(err.response.data);
+      });
+    setIsLoading(false);
+  };
+
+  const signup = (
+    email,
+    displayName,
+    password,
+    setPassword,
+    setConfirmPassword
+  ) => {
+    setIsLoading(true);
+    axios
+      .post(`https://signup-yet5ypcxwq-uc.a.run.app`, {
+        email,
+        displayName,
+        password,
+      })
+      .then((res) => {
+        const userInfo = res.data;
+        setUserInfo(userInfo);
+        const userToken = userInfo.user.uid;
+        setUserToken(userToken);
+        AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+        AsyncStorage.setItem("userToken", userToken);
+      })
+      .catch((err) => {
+        setPassword("");
+        setConfirmPassword("");
         alert(err.response.data.message);
         console.log(err.response.data);
       });
@@ -73,7 +91,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ login, logout, isLoading, userToken, userInfo }}
+      value={{ login, signup, logout, isLoading, userToken, userInfo }}
     >
       {children}
     </AuthContext.Provider>
