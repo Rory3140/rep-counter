@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
     width: "95%",
-    height: 100,
+    height: "fit-content",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: sizes.md,
@@ -20,5 +20,6 @@ const styles = StyleSheet.create({
     borderColor: colors.lightGrey,
     marginTop: 10,
     marginBottom: 10,
+    padding: 20,
   },
 });

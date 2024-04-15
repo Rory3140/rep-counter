@@ -10,16 +10,20 @@ export const InputField = ({
   fieldButtonFunction,
   value,
   onChangeText,
+  style,
 }) => {
   return (
     <View
-      style={{
-        flexDirection: "row",
-        borderBottomColor: "#ccc",
-        borderBottomWidth: 1,
-        paddingBottom: 8,
-        marginBottom: 25,
-      }}
+      style={[
+        style,
+        {
+          flexDirection: "row",
+          borderBottomColor: "#ccc",
+          borderBottomWidth: 1,
+          paddingBottom: 8,
+          marginBottom: 25,
+        },
+      ]}
     >
       {icon}
       {inputType == "password" ? (

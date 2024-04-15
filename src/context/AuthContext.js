@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   const login = (email, password, setPassword) => {
     setIsLoading(true);
@@ -16,17 +17,22 @@ export const AuthProvider = ({ children }) => {
       .then((res) => {
         const userInfo = res.data;
         setUserInfo(userInfo);
+        AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+
         const userToken = userInfo.user.uid;
         setUserToken(userToken);
-        AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         AsyncStorage.setItem("userToken", userToken);
+
+        getUserData(userToken);
       })
       .catch((err) => {
         setPassword("");
         alert(err.response.data.message);
         console.log(err.response.data);
       });
-    setIsLoading(false);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
   };
 
   const signup = (
@@ -46,14 +52,51 @@ export const AuthProvider = ({ children }) => {
       .then((res) => {
         const userInfo = res.data;
         setUserInfo(userInfo);
+        AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
+
         const userToken = userInfo.user.uid;
         setUserToken(userToken);
-        AsyncStorage.setItem("userInfo", JSON.stringify(userInfo));
         AsyncStorage.setItem("userToken", userToken);
+
+        getUserData(userToken);
       })
       .catch((err) => {
         setPassword("");
         setConfirmPassword("");
+        alert(err.response.data.message);
+        console.log(err.response.data);
+      });
+    setIsLoading(false);
+  };
+
+  const getUserData = (uid) => {
+    setIsLoading(true);
+    axios
+      .post(`https://getuserdata-yet5ypcxwq-uc.a.run.app`, { uid })
+      .then((res) => {
+        setUserData(res.data);
+        AsyncStorage.setItem("userData", JSON.stringify(res.data));
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+        console.log(err.response.data);
+      });
+    setIsLoading(false);
+  };
+
+  const updateProfile = (height, weight) => {
+    setIsLoading(true);
+    axios
+      .post(`https://updateprofile-yet5ypcxwq-uc.a.run.app`, {
+        uid: userToken,
+        height,
+        weight,
+      })
+      .then((res) => {
+        setUserData(res.data);
+        AsyncStorage.setItem("userData", JSON.stringify(res.data));
+      })
+      .catch((err) => {
         alert(err.response.data.message);
         console.log(err.response.data);
       });
@@ -65,8 +108,10 @@ export const AuthProvider = ({ children }) => {
     setTimeout(() => {
       setUserInfo(null);
       setUserToken(null);
+      setUserData(null);
       AsyncStorage.removeItem("userInfo");
       AsyncStorage.removeItem("userToken");
+      AsyncStorage.removeItem("userData");
       setIsLoading(false);
     }, 1000);
   };
@@ -75,12 +120,16 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(true);
     let token = await AsyncStorage.getItem("userToken");
     let userInfo = await AsyncStorage.getItem("userInfo");
+    let userData = await AsyncStorage.getItem("userData");
 
     if (token) {
       setUserToken(token);
     }
     if (userInfo) {
       setUserInfo(JSON.parse(userInfo));
+    }
+    if (userData) {
+      setUserData(JSON.parse(userData));
     }
     setIsLoading(false);
   };
@@ -91,7 +140,17 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ login, signup, logout, isLoading, userToken, userInfo }}
+      value={{
+        isLoading,
+        login,
+        signup,
+        getUserData,
+        updateProfile,
+        logout,
+        userToken,
+        userInfo,
+        userData,
+      }}
     >
       {children}
     </AuthContext.Provider>
