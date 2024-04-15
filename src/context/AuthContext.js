@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = (email, password, setPassword) => {
     setIsLoading(true);
-    axios
+    return axios
       .post(`https://login-yet5ypcxwq-uc.a.run.app`, { email, password })
       .then((res) => {
         const userInfo = res.data;
@@ -23,16 +23,16 @@ export const AuthProvider = ({ children }) => {
         setUserToken(userToken);
         AsyncStorage.setItem("userToken", userToken);
 
-        getUserData(userToken);
+        return getUserData(userToken);
       })
       .catch((err) => {
         setPassword("");
         alert(err.response.data.message);
         console.log(err.response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
   };
 
   const signup = (
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
     setConfirmPassword
   ) => {
     setIsLoading(true);
-    axios
+    return axios
       .post(`https://signup-yet5ypcxwq-uc.a.run.app`, {
         email,
         displayName,
@@ -58,20 +58,21 @@ export const AuthProvider = ({ children }) => {
         setUserToken(userToken);
         AsyncStorage.setItem("userToken", userToken);
 
-        getUserData(userToken);
+        return getUserData(userToken);
       })
       .catch((err) => {
         setPassword("");
         setConfirmPassword("");
         alert(err.response.data.message);
         console.log(err.response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-    setIsLoading(false);
   };
 
   const getUserData = (uid) => {
-    setIsLoading(true);
-    axios
+    return axios
       .post(`https://getuserdata-yet5ypcxwq-uc.a.run.app`, { uid })
       .then((res) => {
         setUserData(res.data);
@@ -81,37 +82,40 @@ export const AuthProvider = ({ children }) => {
         alert(err.response.data.message);
         console.log(err.response.data);
       });
-    setIsLoading(false);
   };
 
   const updateProfile = (height, weight) => {
     setIsLoading(true);
-    axios
+    return axios
       .post(`https://updateprofile-yet5ypcxwq-uc.a.run.app`, {
         uid: userToken,
-        height,
-        weight,
+        height: height,
+        weight: weight,
       })
       .then((res) => {
         setUserData(res.data);
         AsyncStorage.setItem("userData", JSON.stringify(res.data));
+
+        return getUserData(userToken);
       })
       .catch((err) => {
         alert(err.response.data.message);
         console.log(err.response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-    setIsLoading(false);
   };
 
   const logout = () => {
     setIsLoading(true);
+    setUserInfo(null);
+    setUserToken(null);
+    setUserData(null);
+    AsyncStorage.removeItem("userInfo");
+    AsyncStorage.removeItem("userToken");
+    AsyncStorage.removeItem("userData");
     setTimeout(() => {
-      setUserInfo(null);
-      setUserToken(null);
-      setUserData(null);
-      AsyncStorage.removeItem("userInfo");
-      AsyncStorage.removeItem("userToken");
-      AsyncStorage.removeItem("userData");
       setIsLoading(false);
     }, 1000);
   };

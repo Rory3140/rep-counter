@@ -11,35 +11,56 @@ import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
 export const ProfileScreen = () => {
-  const { updateProfile, logout, userData, userTocken } =
-    useContext(AuthContext);
+  const { updateProfile, logout, userInfo, userData } = useContext(AuthContext);
 
-  const [weight, setWeight] = useState(userData.weight);
-  const [height, setHeight] = useState(userData.height);
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
 
   return (
     <ScreenContainer>
       <Container>
-        <Text>Welcome: {userData.displayName}</Text>
+        <Text
+          style={{
+            fontSize: fontSizes.lg,
+            color: colors.primary,
+            marginBottom: sizes.md,
+          }}
+        >
+          Profile
+        </Text>
+        <Text style={styles.text}>Welcome: {userData.displayName}</Text>
+        <Text style={styles.text}>Email: {userInfo.user.email}</Text>
+        <Text style={styles.text}>Weight: {userData.weight}</Text>
         <InputField
           label={"Weight"}
           value={weight}
           onChangeText={(text) => setWeight(text)}
-          keyboardType="email-address"
+          keyboardType="numeric"
         />
-
+        <Text style={styles.text}>Height: {userData.height}</Text>
         <InputField
           label={"Height"}
           value={height}
           onChangeText={(text) => setHeight(text)}
-          keyboardType="email-address"
+          keyboardType="numeric"
         />
-        <CustomButton
-          label={"Update"}
-          onPress={() => {
-            updateProfile(userTocken, height, weight);
-          }}
-        />
+
+        {height === "" && weight === "" ? (
+          <Text style={styles.text}>
+            Please enter your height and weight to update your profile
+          </Text>
+        ) : (
+          <CustomButton
+            label={"Update"}
+            onPress={() => {
+              if (height === "" || weight === "") {
+                alert("Please enter your height and weight");
+                return;
+              }
+              updateProfile(height, weight);
+            }}
+          />
+        )}
       </Container>
       <CustomButton
         label={"logout"}
@@ -50,3 +71,11 @@ export const ProfileScreen = () => {
     </ScreenContainer>
   );
 };
+
+const styles = StyleSheet.create({
+  text: {
+    fontSize: fontSizes.md,
+    color: colors.black,
+    marginBottom: sizes.md,
+  },
+});
