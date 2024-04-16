@@ -24,7 +24,6 @@ export const WorkoutScreen = () => {
   const [workoutName, setWorkoutName] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-  // const [bodyWeight, setBodyWeight] = useState("");
   const [exercises, setExercises] = useState([]);
 
   useEffect(() => {
@@ -103,20 +102,6 @@ export const WorkoutScreen = () => {
             <Text style={styles.textButton}>Restart Workout</Text>
           </TouchableOpacity>
         )}
-
-        {/* <Container style={styles.textbox}>
-          <Text style={styles.text}>Body Weight:</Text>
-          <TextInput
-            style={styles.text}
-            value={bodyWeight}
-            onChangeText={(text) => setBodyWeight(text)}
-            keyboardType="number-pad"
-            returnKeyType="done"
-            placeholder="numbers only"
-            maxLength={3}
-            editable={!finishedWorkout}
-          />
-        </Container> */}
       </Container>
 
       {exercises.map((exercise, index) => (

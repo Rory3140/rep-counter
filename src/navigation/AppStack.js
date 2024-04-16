@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { HomeScreen } from "../screens/HomeScreen";
 import { LogScreen } from "../screens/LogScreen";
+import { StartWorkout } from "../screens/StartWorkout";
 import { WorkoutScreen } from "../screens/WorkoutScreen";
 import { RoutinesScreen } from "../screens/RoutinesScreen";
 import { StatsScreen } from "../screens/StatsScreen";
@@ -21,6 +22,21 @@ import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
 const Tab = createBottomTabNavigator();
+
+const WorkoutStack = createStackNavigator();
+
+export const WorkoutStackScreen = () => {
+  return (
+    <WorkoutStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <WorkoutStack.Screen name="StartWorkout" component={StartWorkout} />
+      <WorkoutStack.Screen name="Workout" component={WorkoutScreen} />
+    </WorkoutStack.Navigator>
+  );
+};
 
 export const AppStack = () => {
   return (
@@ -52,8 +68,8 @@ export const AppStack = () => {
         }}
       />
       <Tab.Screen
-        name="Workout"
-        component={WorkoutScreen}
+        name="WorkoutStack"
+        component={WorkoutStackScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <WorkoutIcon width={50} height={50} fill={color} />

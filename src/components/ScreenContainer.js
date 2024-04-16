@@ -23,8 +23,10 @@ export const ScreenContainer = ({ style, children }) => {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <ScrollView style={{ flex: 1, width: "100%", backgroundColor: colors.offWhite }}>
-        <View style={[styles.innerContainer, style]}>{children}</View>
+      <ScrollView
+        style={{ flex: 1, width: "100%", backgroundColor: colors.offWhite }}
+      >
+        <View style={[style, styles.innerContainer]}>{children}</View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -44,6 +46,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.offWhite,
     width: "100%",
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "center",
   },
 });
