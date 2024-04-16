@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,168 +6,221 @@ import {
   SafeAreaView,
   TextInput,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 
 import { ScreenContainer } from "../components/ScreenContainer";
+import { Container } from "../components/Container";
+import { CustomButton } from "../components/CustomButton";
+import { InputField } from "../components/InputField";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
-import { Container } from "../components/Container";
-import { CustomButton } from "../components/CustomButton";
-import { useState } from "react";
-import { InputField } from "../components/InputField";
-import { useEffect } from "react";
 
 export const WorkoutScreen = () => {
+  const [workout, setWorkout] = useState(null);
+
   const [workoutName, setWorkoutName] = useState("");
-  const [startTime, setTime] = React.useState("");
-  const [endTime, setEndTime] = React.useState("");
-  const [inputValue, setInputValue] = useState("");
-  const [exerciseCount, setExerciseCount] = useState(0);
-  const [exercise, setExercise] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+  // const [bodyWeight, setBodyWeight] = useState("");
+  const [exercises, setExercises] = useState([]);
 
-  const handleWorkoutNameChange = (text) => {
-    setWorkoutName(text);
-  };
-
-  React.useEffect(() => {
-    setTime(new Date().toLocaleTimeString());
+  useEffect(() => {
+    setStartTime(new Date().toLocaleTimeString());
   }, []);
 
-  const getTime = () => {
-    setEndTime(new Date().toLocaleTimeString());
-  };
-
-  const handleChange = (text) => {
-    const numericValue = text.replace(/[^0-9]/g, "").slice(0, 3);
-    setInputValue(numericValue);
-  };
-
   const addExercise = () => {
-    setExerciseCount(exerciseCount + 1);
+    const newExercise = {
+      exerciseName: "",
+      sets: [],
+    };
+    setExercises([...exercises, newExercise]);
   };
 
-  const handletext = (text) => {
-    setExercise(text);
+  const addSet = (index) => {
+    const newSet = {
+      reps: 0,
+      weight: 0,
+      note: "",
+    };
+    const updatedExercises = [...exercises];
+    updatedExercises[index].sets.push(newSet);
+    setExercises(updatedExercises);
+  };
+
+  const createWorkout = () => {
+    const endTime = new Date().toLocaleTimeString();
+    setEndTime(endTime);
+
+    const workout = {
+      workoutName,
+      startTime,
+      endTime,
+      exercises,
+    };
+    setWorkout(workout);
   };
 
   return (
-    <ScrollView>
-      <ScreenContainer style={styles.infoPlace}>
-        <Container style={styles.infoContainer}>
-          <Container style={[styles.nameBox]}>
-            <InputField
-              label={"Workout Name"}
-              keyboardType="default"
-              value={workoutName}
-              onChangeText={handleWorkoutNameChange}
-              style={{
-                marginBottom: 0,
-                paddingBottom: 0,
-                borderBottomWidth: 0,
-              }}
-            />
-          </Container>
-          <Container
-            style={[styles.textbox, { justifyContent: "space-between" }]}
-          >
-            <Text style={styles.text}>Start time:</Text>
-            <Text style={styles.text}>{startTime}</Text>
-          </Container>
-          <Container
-            style={[styles.textbox, { justifyContent: "space-between" }]}
-          >
-            <Text style={styles.text}>End time:</Text>
-            <Text style={styles.text}>{endTime}</Text>
-          </Container>
-          <Container
-            style={[styles.textbox, { justifyContent: "space-between" }]}
-          >
-            <Text style={styles.text}>BodyWeight:</Text>
-            <TextInput
-              style={styles.text}
-              onChangeText={handleChange}
-              value={inputValue}
-              keyboardType="number-pad"
-              returnKeyType={"done"}
-              placeholder="numbers only"
-              placeholderTextColor="#999"
-            />
-          </Container>
+    <ScreenContainer>
+      <Container>
+        <Container style={styles.textbox}>
+          <Text style={styles.text}>Workout Name:</Text>
+          <TextInput
+            style={styles.text}
+            onChangeText={(text) => setWorkoutName(text)}
+            value={workoutName}
+            keyboardType="default"
+            returnKeyType="done"
+            placeholder="Workout Name"
+            maxLength={20}
+          />
         </Container>
 
-        {[...Array(exerciseCount)].map((_, index) => (
-          <Container
-            key={index}
-            style={{
-              padding: 0,
-            }}
-          >
-            <Container style={styles.exerciseNameContainer}>
-              <TextInput
-                style={styles.text}
-                onChangeText={handletext}
-                value={inputValue}
-                keyboardType="default"
-                placeholder="Exercise Name"
-                placeholderTextColor="#999"
-              />
-            </Container>
-            <Text>Exercise {index + 1}</Text>
-          </Container>
-        ))}
+        <Container style={styles.textbox}>
+          <Text style={styles.text}>Start time:</Text>
+          <Text style={styles.text}>{startTime}</Text>
+        </Container>
 
-        <CustomButton
-          style={styles.exersiceButtonContainer}
-          label={"Add Exersice"}
-          onPress={() => {
-            addExercise();
-          }}
-        ></CustomButton>
-        <CustomButton
-          style={styles.finishWorkout}
-          label={"Finish Workout"}
-          onPress={() => {
-            getTime();
-          }}
-        ></CustomButton>
-      </ScreenContainer>
-    </ScrollView>
+        <Container style={styles.textbox}>
+          <Text style={styles.text}>End time:</Text>
+          <Text style={styles.text}>{endTime}</Text>
+        </Container>
+
+        {/* <Container style={styles.textbox}>
+          <Text style={styles.text}>Body Weight:</Text>
+          <TextInput
+            style={styles.text}
+            value={bodyWeight}
+            onChangeText={(text) => setBodyWeight(text)}
+            keyboardType="number-pad"
+            returnKeyType="done"
+            placeholder="numbers only"
+            maxLength={3}
+          />
+        </Container> */}
+      </Container>
+
+      {exercises.map((exercise, index) => (
+        <Container key={index}>
+          <Container style={styles.textbox}>
+            <Text style={styles.text}>Exercise Name:</Text>
+            <TextInput
+              style={styles.text}
+              value={exercise.exerciseName}
+              onChangeText={(text) => {
+                const updatedExercises = [...exercises];
+                updatedExercises[index].exerciseName = text;
+                setExercises(updatedExercises);
+              }}
+              keyboardType="default"
+              returnKeyType="done"
+              placeholder="Exercise Name"
+              maxLength={20}
+            />
+          </Container>
+          {exercise.sets.map((set, setIndex) => (
+            <Container key={setIndex}>
+              <Container style={styles.textbox}>
+                <Text style={styles.text}>Reps:</Text>
+                <TextInput
+                  style={styles.text}
+                  value={set.reps === 0 ? "" : set.reps.toString()}
+                  onChangeText={(text) => {
+                    const updatedExercises = [...exercises];
+                    updatedExercises[index].sets[setIndex].reps = text;
+                    setExercises(updatedExercises);
+                  }}
+                  keyboardType="number-pad"
+                  returnKeyType="done"
+                  placeholder="Rep Count"
+                  maxLength={3}
+                />
+              </Container>
+              <Container style={styles.textbox}>
+                <Text style={styles.text}>Weight:</Text>
+                <TextInput
+                  style={styles.text}
+                  value={set.weight === 0 ? "" : set.weight.toString()}
+                  onChangeText={(text) => {
+                    const updatedExercises = [...exercises];
+                    updatedExercises[index].sets[setIndex].weight = text;
+                    setExercises(updatedExercises);
+                  }}
+                  keyboardType="number-pad"
+                  returnKeyType="done"
+                  placeholder="Weight in lbs"
+                  maxLength={3}
+                />
+              </Container>
+              <Container style={styles.textbox}>
+                <Text style={styles.text}>Note:</Text>
+                <TextInput
+                  style={styles.text}
+                  value={set.note}
+                  onChangeText={(text) => {
+                    const updatedExercises = [...exercises];
+                    updatedExercises[index].sets[setIndex].note = text;
+                    setExercises(updatedExercises);
+                  }}
+                  keyboardType="default"
+                  returnKeyType="done"
+                  placeholder="Note"
+                  maxLength={20}
+                />
+              </Container>
+              <TouchableOpacity
+                onPress={() => {
+                  const updatedExercises = [...exercises];
+                  updatedExercises[index].sets.splice(setIndex, 1);
+                  setExercises(updatedExercises);
+                }}
+              >
+                <Text
+                  style={{
+                    color: colors.primary,
+                    textAlign: "center",
+                    fontSize: fontSizes.md,
+                    margin: 10,
+                  }}
+                >
+                  Delete Set
+                </Text>
+              </TouchableOpacity>
+            </Container>
+          ))}
+          <CustomButton label={"Add Set"} onPress={() => addSet(index)} />
+        </Container>
+      ))}
+
+      <CustomButton
+        label={"Add Exercise"}
+        onPress={() => {
+          addExercise();
+        }}
+      ></CustomButton>
+
+      <CustomButton
+        label={"Finish Workout"}
+        onPress={() => {
+          createWorkout();
+        }}
+      ></CustomButton>
+    </ScreenContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  infoContainer: {
-    justifyContent: "flex-start",
-    alignItems: "center",
-    height: "fit-content",
-    marginBottom: 20,
-  },
-
-  infoPlace: {
-    justifyContent: "flex-start",
-    alignItems: "center",
-  },
-
-  nameBox: {
-    width: "98%",
-    height: "fit-content",
-    marginTop: 0,
-    marginBottom: 0,
-    paddingBottom: 0,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
   textbox: {
     display: "flex",
     flexDirection: "row",
     boarderwidth: 1,
     width: "98%",
     height: 50,
-    marginTop: 4,
+    margin: 5,
     marginBottom: 0,
-    justifyContent: "left",
+    justifyContent: "space-between",
     alignItems: "center",
     padding: 0,
   },
@@ -175,26 +228,5 @@ const styles = StyleSheet.create({
   text: {
     marginLeft: 10,
     marginRight: 10,
-  },
-
-  exerciseNameContainer: {
-    display: "flex",
-    flexDirection: "row",
-    borderRadius: 0,
-    borderBottomColor: "#ccc",
-    borderColor: "white",
-    width: "100%",
-    height: 50,
-    justifyContent: "left",
-    alignItems: "center",
-    padding: 0,
-    marginBottom: 0,
-  },
-
-  exersiceButtonContainer: {
-    height: 50,
-  },
-  finishWorkout: {
-    height: 50,
   },
 });

@@ -118,6 +118,28 @@ export const AuthProvider = ({ children }) => {
       });
   };
 
+  const addWorkout = (workout) => {
+    setIsLoading(true);
+    return axios
+      .post(`https://addworkout-yet5ypcxwq-uc.a.run.app`, {
+        uid: userToken,
+        workout,
+      })
+      .then((res) => {
+        setUserData(res.data);
+        AsyncStorage.setItem("userData", JSON.stringify(res.data));
+
+        return getUserData(userToken);
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+        console.log(err.response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   const logout = () => {
     setIsLoading(true);
     setUserInfo(null);
@@ -161,6 +183,7 @@ export const AuthProvider = ({ children }) => {
         signup,
         getUserData,
         updateProfile,
+        addWorkout,
         logout,
         userToken,
         userInfo,

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Container } from "../components/Container";
@@ -35,14 +35,16 @@ export const ProfileScreen = () => {
           label={"Weight"}
           value={weight}
           onChangeText={(text) => setWeight(text)}
-          keyboardType="numeric"
+          keyboardType="number-pad"
+          returnKeyType="done"
         />
         <Text style={styles.text}>Height: {userData.height}</Text>
         <InputField
           label={"Height"}
           value={height}
           onChangeText={(text) => setHeight(text)}
-          keyboardType="numeric"
+          keyboardType="number-pad"
+          returnKeyType="done"
         />
 
         {height === "" && weight === "" ? (

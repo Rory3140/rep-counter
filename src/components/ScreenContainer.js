@@ -4,6 +4,8 @@ import {
   Text,
   View,
   SafeAreaView,
+  KeyboardAvoidingView,
+  ScrollView,
 } from "react-native";
 
 import { Loading } from "../components/Loading";
@@ -20,9 +22,11 @@ export const ScreenContainer = ({ style, children }) => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={[styles.innerContainer, style]}>{children}</View>
-    </SafeAreaView>
+    <KeyboardAvoidingView style={styles.container}>
+      <ScrollView style={{ flex: 1, width: "100%", backgroundColor: colors.offWhite }}>
+        <View style={[styles.innerContainer, style]}>{children}</View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -40,6 +44,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.offWhite,
     width: "100%",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
 });

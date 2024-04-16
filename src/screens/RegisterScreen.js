@@ -54,6 +54,7 @@ export const RegisterScreen = () => {
           value={email}
           onChangeText={(text) => setEmail(text)}
           keyboardType="email-address"
+          returnKeyType="done"
         />
 
         <InputField
@@ -68,7 +69,8 @@ export const RegisterScreen = () => {
           }
           value={displayName}
           onChangeText={(text) => setDisplayName(text)}
-          keyboardType="email-address"
+          keyboardType="default"
+          returnKeyType="done"
         />
 
         <InputField
@@ -84,6 +86,7 @@ export const RegisterScreen = () => {
           value={password}
           onChangeText={(text) => setPassword(text)}
           inputType="password"
+          returnKeyType="done"
         />
 
         <InputField
@@ -99,6 +102,7 @@ export const RegisterScreen = () => {
           value={confirmPassword}
           onChangeText={(text) => setConfirmPassword(text)}
           inputType="password"
+          returnKeyType="done"
         />
 
         <CustomButton

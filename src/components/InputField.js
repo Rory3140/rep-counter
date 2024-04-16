@@ -11,6 +11,7 @@ export const InputField = ({
   value,
   onChangeText,
   style,
+  returnKeyType,
 }) => {
   return (
     <View
@@ -34,6 +35,7 @@ export const InputField = ({
           secureTextEntry={true}
           value={value}
           onChangeText={onChangeText}
+          returnKeyType={returnKeyType}
         />
       ) : (
         <TextInput
@@ -42,6 +44,7 @@ export const InputField = ({
           style={{ flex: 1, paddingVertical: 0 }}
           value={value}
           onChangeText={onChangeText}
+          returnKeyType={returnKeyType}
         />
       )}
       <TouchableOpacity onPress={fieldButtonFunction}>

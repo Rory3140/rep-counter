@@ -9,6 +9,8 @@ import {
   StatusBar,
 } from "react-native";
 import { useFonts } from "expo-font";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 
 import { colors } from "../utils/colors";
@@ -17,26 +19,40 @@ import { sizes, fontSizes } from "../utils/spacing";
 import Profile from "../../assets/icons/profile";
 import { Title } from "./Title";
 
-export const TitleBar = () => {
+export const TitleBar = ({ showBackButton, showProfileButton = true }) => {
   const [fontsLoaded] = useFonts({
     norwester: require("../../assets/fonts/norwester.ttf"),
   });
-  
+
   const navigation = useNavigation();
-  
+
   if (!fontsLoaded) {
     return <Text>Loading...</Text>;
   }
-  
+
   return (
     <View style={styles.container}>
+      {showBackButton && (
+        <TouchableOpacity
+          style={styles.backButtonWrapper}
+          onPress={() => navigation.goBack()}
+        >
+          <MaterialIcons
+            name="arrow-back-ios"
+            size={24}
+            color={colors.darkGrey}
+          />
+        </TouchableOpacity>
+      )}
       <Title />
-      <TouchableOpacity
-        style={styles.profileIconWrapper}
-        onPress={() => navigation.navigate("Profile")}
-      >
-        <Profile width={50} height={50} fill={colors.darkGrey} />
-      </TouchableOpacity>
+      {showProfileButton && (
+        <TouchableOpacity
+          style={styles.profileIconWrapper}
+          onPress={() => navigation.navigate("Profile")}
+        >
+          <Profile width={50} height={50} fill={colors.darkGrey} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -52,6 +68,12 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.lightGrey,
     paddingTop: Platform.OS === "ios" ? 50 : 0,
     height: Platform.OS === "ios" ? 120 : 80,
+  },
+
+  backButtonWrapper: {
+    position: "absolute",
+    left: 20,
+    top: Platform.OS === "ios" ? 75 : 30,
   },
 
   profileIconWrapper: {

@@ -22,8 +22,6 @@ import { sizes, fontSizes } from "../utils/spacing";
 
 const Tab = createBottomTabNavigator();
 
-function AppTabs() {}
-
 export const AppStack = () => {
   return (
     <Tab.Navigator
@@ -84,6 +82,9 @@ export const AppStack = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
+          header: () => (
+            <TitleBar showBackButton={true} showProfileButton={false} />
+          ),
           tabBarButton: () => null,
         }}
       />

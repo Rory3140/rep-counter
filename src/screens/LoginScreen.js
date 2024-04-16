@@ -51,6 +51,7 @@ export const LoginScreen = ({ navigation }) => {
           value={email}
           onChangeText={(text) => setEmail(text)}
           keyboardType="email-address"
+          returnKeyType="done"
         />
 
         <InputField
@@ -66,6 +67,7 @@ export const LoginScreen = ({ navigation }) => {
           value={password}
           onChangeText={(text) => setPassword(text)}
           inputType="password"
+          returnKeyType="done"
         />
 
         <CustomButton
