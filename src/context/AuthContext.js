@@ -76,6 +76,9 @@ export const AuthProvider = ({ children }) => {
     return axios
       .post(`https://getuserdata-yet5ypcxwq-uc.a.run.app`, { uid })
       .then((res) => {
+
+        
+
         setUserData(res.data);
         AsyncStorage.setItem("userData", JSON.stringify(res.data));
       })

@@ -15,7 +15,7 @@ import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
 
 export const ScreenContainer = ({ isScrollable = false, style, children }) => {
-  const { isLoading } = React.useContext(AuthContext);
+  const { isLoading, userData } = React.useContext(AuthContext);
 
   if (isLoading) {
     return <Loading />;

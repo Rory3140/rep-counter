@@ -1,21 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import { Container } from "../components/Container";
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Button } from "../components/Button";
+import { AuthContext } from "../context/AuthContext";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
 
 export const HomeScreen = () => {
+  const { userData } = useContext(AuthContext);
+
   const navigation = useNavigation();
 
   return (
     <ScreenContainer>
       <Container style={styles.workoutStreakWrapper}>
         <Text style={styles.text}>Workout Streak</Text>
+        <Text style={{ fontSize: fontSizes.xxl, fontWeight: "bold" }}>
+          {userData?.workoutStreak}🔥
+        </Text>
       </Container>
 
       <Container>
@@ -41,6 +47,7 @@ const styles = StyleSheet.create({
   text: {
     color: colors.black,
     fontSize: fontSizes.lg,
+    fontWeight: "bold",
   },
 
   workoutStreakWrapper: {
@@ -48,7 +55,7 @@ const styles = StyleSheet.create({
   },
 
   quoteOfTheDayWrapper: {
-    height: 100,
+    flex: 1,
   },
 
   statsWrapper: {

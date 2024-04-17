@@ -22,7 +22,7 @@ export const InputField = ({
           borderBottomColor: "#ccc",
           borderBottomWidth: 1,
           paddingBottom: 8,
-          marginBottom: 5,
+          marginBottom: 30,
         },
       ]}
     >
