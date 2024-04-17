@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 import { colors } from "../utils/colors";
-import { sizes, fontSizes } from "../utils/spacing";
+import { sizes, fontSizes } from "../utils/sizes";
 
 export const Container = ({ style, children }) => {
   return <View style={[styles.container, style]}>{children}</View>;
@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
     borderRadius: sizes.md,
     borderWidth: 1,
     borderColor: colors.lightGrey,
-    marginTop: 10,
-    marginBottom: 10,
-    padding: 20,
+    marginTop: sizes.sm,
+    marginBottom: sizes.sm,
+    padding: sizes.md,
   },
 });

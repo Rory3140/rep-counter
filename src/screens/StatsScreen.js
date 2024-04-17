@@ -5,7 +5,7 @@ import { Picker } from '@react-native-picker/picker';
 
 import { ScreenContainer } from "../components/ScreenContainer";
 import { colors } from "../utils/colors";
-import { sizes, fontSizes } from "../utils/spacing";
+import { sizes, fontSizes } from "../utils/sizes";
 
 const screenWidth = Dimensions.get('window').width;
 

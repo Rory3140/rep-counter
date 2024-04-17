@@ -4,10 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 
 import { Container } from "../components/Container";
 import { ScreenContainer } from "../components/ScreenContainer";
-import { CustomButton } from "../components/CustomButton";
+import { Button } from "../components/Button";
 
 import { colors } from "../utils/colors";
-import { sizes, fontSizes } from "../utils/spacing";
+import { sizes, fontSizes } from "../utils/sizes";
 
 export const HomeScreen = () => {
   const navigation = useNavigation();
@@ -20,7 +20,7 @@ export const HomeScreen = () => {
 
       <Container>
         <Text style={styles.text}>Quick Workout</Text>
-        <CustomButton
+        <Button
           label="Start Workout"
           onPress={() => navigation.navigate("Workout")}
         />

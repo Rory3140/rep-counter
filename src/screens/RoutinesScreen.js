@@ -1,17 +1,19 @@
 import React from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import { CustomButton } from "../components/CustomButton";
+
+import { Button } from "../components/Button";
 import { ScreenContainer } from "../components/ScreenContainer";
-import { colors } from "../utils/colors";
-import { sizes, fontSizes } from "../utils/spacing";
 import { Container } from "../components/Container";
+
+import { colors } from "../utils/colors";
+import { sizes, fontSizes } from "../utils/sizes";
 
 export const RoutinesScreen = () => {
   return (
     <ScreenContainer>
-      <CustomButton label={"Create New Routine"} onPress={() => {}} />
+      <Button label={"Create New Routine"} onPress={() => {}} />
       <Container style={styles.Line}></Container>
-      <CustomButton
+      <Button
         label={"Routine 1(White backround)Arrow to right"}
         style={styles.routineButton}
         onPress={() => {}}

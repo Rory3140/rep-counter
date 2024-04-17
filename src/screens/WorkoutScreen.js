@@ -9,11 +9,11 @@ import {
 
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Container } from "../components/Container";
-import { CustomButton } from "../components/CustomButton";
+import { Button } from "../components/Button";
 import { AuthContext } from "../context/AuthContext";
 
 import { colors } from "../utils/colors";
-import { sizes, fontSizes } from "../utils/spacing";
+import { sizes, fontSizes } from "../utils/sizes";
 
 export const WorkoutScreen = () => {
   const { addWorkout } = useContext(AuthContext);
@@ -200,7 +200,7 @@ export const WorkoutScreen = () => {
 
           {!finishedWorkout && (
             <>
-              <CustomButton label={"Add Set"} onPress={() => addSet(index)} />
+              <Button label={"Add Set"} onPress={() => addSet(index)} />
               <TouchableOpacity
                 onPress={() => {
                   const updatedExercises = [...exercises];
@@ -217,14 +217,14 @@ export const WorkoutScreen = () => {
 
       {!finishedWorkout ? (
         <>
-          <CustomButton
+          <Button
             label={"Add Exercise"}
             onPress={() => {
               addExercise();
             }}
           />
 
-          <CustomButton
+          <Button
             label={"Finish Workout"}
             onPress={() => {
               setFinishedWorkout(true);
@@ -233,7 +233,7 @@ export const WorkoutScreen = () => {
           />
         </>
       ) : (
-        <CustomButton
+        <Button
           label={"Start New Workout"}
           onPress={() => {
             resetWorkout();

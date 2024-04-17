@@ -11,11 +11,11 @@ import {
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Container } from "../components/Container";
 import { InputField } from "../components/InputField";
-import { CustomButton } from "../components/CustomButton";
+import { Button } from "../components/Button";
 import { AuthContext } from "../context/AuthContext";
 
 import { colors } from "../utils/colors";
-import { sizes, fontSizes } from "../utils/spacing";
+import { sizes, fontSizes } from "../utils/sizes";
 
 export const ProfileScreen = () => {
   const { updateProfile, logout, userInfo, userData } = useContext(AuthContext);
@@ -70,7 +70,7 @@ export const ProfileScreen = () => {
             Please enter your height and weight to update your profile
           </Text>
         ) : (
-          <CustomButton
+          <Button
             label={"Update"}
             onPress={() => {
               updateProfile(height, weight, setHeight, setWeight);
@@ -78,7 +78,7 @@ export const ProfileScreen = () => {
           />
         )}
       </Container>
-      <CustomButton
+      <Button
         label={"logout"}
         onPress={() => {
           logout();

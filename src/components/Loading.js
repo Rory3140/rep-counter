@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
 
 import { colors } from "../utils/colors";
-import { sizes, fontSizes } from "../utils/spacing";
+import { sizes, fontSizes } from "../utils/sizes";
 
 export const Loading = () => {
   return (

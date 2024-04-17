@@ -7,7 +7,6 @@ import { AppStack } from "./AppStack";
 import { AuthContext } from "../context/AuthContext";
 
 import { colors } from "../utils/colors";
-import { sizes, fontSizes } from "../utils/spacing";
 
 export const AppNav = () => {
   const {userToken } = useContext(AuthContext);

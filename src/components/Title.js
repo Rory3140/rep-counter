@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { useFonts } from "expo-font";
 
 import { colors } from "../utils/colors";
-import { sizes, fontSizes } from "../utils/spacing";
+import { sizes, fontSizes } from "../utils/sizes";
 
 export const Title = () => {
   const [fontsLoaded] = useFonts({

@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { ScreenContainer } from "../components/ScreenContainer";
 
 import { colors } from "../utils/colors";
-import { sizes, fontSizes } from "../utils/spacing";
+import { sizes, fontSizes } from "../utils/sizes";
 
 export const LogScreen = () => {
   return (

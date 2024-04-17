@@ -15,7 +15,7 @@ import { Loading } from "../components/Loading";
 import { AuthContext } from "../context/AuthContext";
 
 import { colors } from "../utils/colors";
-import { sizes, fontSizes } from "../utils/spacing";
+import { sizes, fontSizes } from "../utils/sizes";
 
 export const OnboardingScreen = ({ navigation }) => {
   const { isLoading } = React.useContext(AuthContext);

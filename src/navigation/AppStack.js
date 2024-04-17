@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
 
 import { HomeScreen } from "../screens/HomeScreen";
 import { LogScreen } from "../screens/LogScreen";
@@ -19,24 +18,8 @@ import RoutinesIcon from "../../assets/icons/repeat";
 import StatsIcon from "../../assets/icons/graph";
 
 import { colors } from "../utils/colors";
-import { sizes, fontSizes } from "../utils/spacing";
 
 const Tab = createBottomTabNavigator();
-
-// const WorkoutStack = createStackNavigator();
-
-// const WorkoutStackScreen = () => {
-//   return (
-//     <WorkoutStack.Navigator
-//       screenOptions={{
-//         headerShown: false,
-//       }}
-//     >
-//       <WorkoutStack.Screen name="StartWorkout" component={StartWorkout} />
-//       <WorkoutStack.Screen name="Workout" component={WorkoutScreen} />
-//     </WorkoutStack.Navigator>
-//   );
-// };
 
 export const AppStack = () => {
   return (

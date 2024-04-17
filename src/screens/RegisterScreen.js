@@ -2,14 +2,12 @@ import React, { useContext, useState } from "react";
 import {
   View,
   Text,
-  TouchableOpacity,
   KeyboardAvoidingView,
-  ActivityIndicator,
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { CustomButton } from "../components/CustomButton";
+import { Button } from "../components/Button";
 import { InputField } from "../components/InputField";
 import { Loading } from "../components/Loading";
 import { AuthContext } from "../context/AuthContext";
@@ -105,7 +103,7 @@ export const RegisterScreen = () => {
           returnKeyType="done"
         />
 
-        <CustomButton
+        <Button
           label={"Sign Up"}
           onPress={() => {
             if (password !== confirmPassword) {
