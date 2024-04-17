@@ -23,20 +23,20 @@ import { sizes, fontSizes } from "../utils/spacing";
 
 const Tab = createBottomTabNavigator();
 
-const WorkoutStack = createStackNavigator();
+// const WorkoutStack = createStackNavigator();
 
-export const WorkoutStackScreen = () => {
-  return (
-    <WorkoutStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <WorkoutStack.Screen name="StartWorkout" component={StartWorkout} />
-      <WorkoutStack.Screen name="Workout" component={WorkoutScreen} />
-    </WorkoutStack.Navigator>
-  );
-};
+// const WorkoutStackScreen = () => {
+//   return (
+//     <WorkoutStack.Navigator
+//       screenOptions={{
+//         headerShown: false,
+//       }}
+//     >
+//       <WorkoutStack.Screen name="StartWorkout" component={StartWorkout} />
+//       <WorkoutStack.Screen name="Workout" component={WorkoutScreen} />
+//     </WorkoutStack.Navigator>
+//   );
+// };
 
 export const AppStack = () => {
   return (
@@ -68,8 +68,8 @@ export const AppStack = () => {
         }}
       />
       <Tab.Screen
-        name="WorkoutStack"
-        component={WorkoutStackScreen}
+        name="StartWorkout"
+        component={StartWorkout}
         options={{
           tabBarIcon: ({ color }) => (
             <WorkoutIcon width={50} height={50} fill={color} />
@@ -101,6 +101,14 @@ export const AppStack = () => {
           header: () => (
             <TitleBar showBackButton={true} showProfileButton={false} />
           ),
+          tabBarButton: () => null,
+        }}
+      />
+      <Tab.Screen
+        name="Workout"
+        component={WorkoutScreen}
+        options={{
+          header: () => <TitleBar showBackButton={true} />,
           tabBarButton: () => null,
         }}
       />

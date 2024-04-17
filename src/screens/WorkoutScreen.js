@@ -3,9 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   TextInput,
-  ScrollView,
   TouchableOpacity,
 } from "react-native";
 
@@ -22,12 +20,17 @@ export const WorkoutScreen = () => {
 
   const [finishedWorkout, setFinishedWorkout] = useState(false);
   const [workoutName, setWorkoutName] = useState("");
+  const [date, setDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [exercises, setExercises] = useState([]);
 
   useEffect(() => {
-    setStartTime(new Date().toLocaleTimeString());
+    const startTime = new Date().toLocaleTimeString();
+    setStartTime(startTime);
+
+    const date = new Date().toLocaleDateString();
+    setDate(date);
   }, []);
 
   const addExercise = () => {
@@ -55,6 +58,7 @@ export const WorkoutScreen = () => {
 
     const workout = {
       workoutName,
+      date,
       startTime,
       endTime,
       exercises,
@@ -71,7 +75,7 @@ export const WorkoutScreen = () => {
   };
 
   return (
-    <ScreenContainer>
+    <ScreenContainer isScrollable>
       <Container>
         <Container style={styles.textbox}>
           <Text style={styles.text}>Workout Name:</Text>

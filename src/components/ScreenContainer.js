@@ -14,11 +14,19 @@ import { AuthContext } from "../context/AuthContext";
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/spacing";
 
-export const ScreenContainer = ({ style, children }) => {
+export const ScreenContainer = ({ isScrollable = false, style, children }) => {
   const { isLoading } = React.useContext(AuthContext);
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (!isScrollable) {
+    return (
+      <KeyboardAvoidingView style={styles.container}>
+        <View style={[style, styles.innerContainer]}>{children}</View>
+      </KeyboardAvoidingView>
+    );
   }
 
   return (
