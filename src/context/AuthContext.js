@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [userData, setUserData] = useState(null);
+  const [workoutStreak, setWorkoutStreak] = useState(0);
 
   const login = (email, password, setPassword) => {
     setIsLoading(true);
@@ -78,6 +79,8 @@ export const AuthProvider = ({ children }) => {
       .then((res) => {
         setUserData(res.data);
         AsyncStorage.setItem("userData", JSON.stringify(res.data));
+
+        updateWorkoutStreak(res.data);
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -140,6 +143,41 @@ export const AuthProvider = ({ children }) => {
       });
   };
 
+  const updateWorkoutStreak = (userData) => {
+    const todayDate = new Date();
+
+    let lastWorkoutDate = userData.lastWorkout.date;
+    const [day, month, year] = lastWorkoutDate.split("/");
+    lastWorkoutDate = new Date(year, month - 1, day);
+
+    let twoDaysAgoDate = new Date();
+    twoDaysAgoDate.setDate(twoDaysAgoDate.getDate() - 2);
+
+    let workoutDates = userData.workouts.map((workout) => {
+      let workoutDate = workout.date;
+      const [day, month, year] = workoutDate.split("/");
+      workoutDate = new Date(year, month - 1, day);
+      return workoutDate;
+    });
+
+    if (lastWorkoutDate <= twoDaysAgoDate) {
+      setWorkoutStreak(0);
+    } else {
+      let streak = 0;
+      let workoutCounter = lastWorkoutDate;
+
+      for (let i = workoutDates.length - 1; i >= 0; i--) {
+        if (workoutDates[i].getTime() === workoutCounter.getTime()) {
+          streak++;
+          workoutCounter.setDate(workoutCounter.getDate() - 1);
+        } else {
+          break;
+        }
+      }
+      setWorkoutStreak(streak);
+    }
+  };
+
   const logout = () => {
     setIsLoading(true);
     setUserInfo(null);
@@ -188,6 +226,7 @@ export const AuthProvider = ({ children }) => {
         userToken,
         userInfo,
         userData,
+        workoutStreak,
       }}
     >
       {children}

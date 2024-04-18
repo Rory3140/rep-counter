@@ -11,7 +11,7 @@ import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
 
 export const HomeScreen = () => {
-  const { userData } = useContext(AuthContext);
+  const { workoutStreak } = useContext(AuthContext);
 
   const navigation = useNavigation();
 
@@ -20,7 +20,7 @@ export const HomeScreen = () => {
       <Container style={styles.workoutStreakWrapper}>
         <Text style={styles.text}>Workout Streak</Text>
         <Text style={{ fontSize: fontSizes.xxl, fontWeight: "bold" }}>
-          {userData?.workoutStreak}🔥
+          {workoutStreak}🔥
         </Text>
       </Container>
 
