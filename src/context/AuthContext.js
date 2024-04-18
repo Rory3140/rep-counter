@@ -138,7 +138,6 @@ export const AuthProvider = ({ children }) => {
       .then((res) => {
         let newUserData = userData;
         newUserData.workouts.push(workout);
-        newUserData.lastWorkout = workout;
         setUserData(newUserData);
 
         updateWorkoutStreak(newUserData);

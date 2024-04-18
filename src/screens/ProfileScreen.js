@@ -26,15 +26,6 @@ export const ProfileScreen = () => {
   return (
     <ScreenContainer>
       <Container>
-        <Text
-          style={{
-            fontSize: fontSizes.lg,
-            color: colors.primary,
-            marginBottom: sizes.md,
-          }}
-        >
-          Profile
-        </Text>
         <Container>
           <Text style={styles.text}>Display Name: {userData.displayName}</Text>
           <Text style={styles.text}>Email: {userInfo.user.email}</Text>
@@ -66,9 +57,11 @@ export const ProfileScreen = () => {
         </Container>
 
         {height === "" && weight === "" ? (
-          <Text style={styles.text}>
-            Please enter your height and weight to update your profile
-          </Text>
+          <View style={styles.textbox}>
+            <Text style={styles.text}>
+              Please enter your height and weight to update your profile
+            </Text>
+          </View>
         ) : (
           <Button
             label={"Update"}
@@ -113,7 +106,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 150,
     margin: 10,
-    textAlign: "center",
+    padding: 10,
   },
 
   textButton: {

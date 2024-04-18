@@ -266,9 +266,9 @@ const styles = StyleSheet.create({
 
   textInput: {
     height: 40,
-    width: 100,
+    width: 120,
     margin: 10,
-    textAlign: "center",
+    padding: 10,
   },
 
   textButton: {
