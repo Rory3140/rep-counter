@@ -11,6 +11,20 @@ export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   const [workoutStreak, setWorkoutStreak] = useState(0);
 
+  const refreshUserData = async () => {
+    const token = await AsyncStorage.getItem("userToken");
+    if (token) {
+      getUserData(token);
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshUserData();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   const login = (email, password, setPassword) => {
     setIsLoading(true);
     return axios
@@ -24,7 +38,7 @@ export const AuthProvider = ({ children }) => {
         setUserToken(userToken);
         AsyncStorage.setItem("userToken", userToken);
 
-        return getUserData(userToken);
+        getUserData(userToken);
       })
       .catch((err) => {
         setPassword("");
@@ -59,7 +73,7 @@ export const AuthProvider = ({ children }) => {
         setUserToken(userToken);
         AsyncStorage.setItem("userToken", userToken);
 
-        return getUserData(userToken);
+        getUserData(userToken);
       })
       .catch((err) => {
         setPassword("");
@@ -73,7 +87,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const getUserData = (uid) => {
-    setIsLoading(true);
     return axios
       .post(`https://getuserdata-yet5ypcxwq-uc.a.run.app`, { uid })
       .then((res) => {
@@ -85,9 +98,6 @@ export const AuthProvider = ({ children }) => {
       .catch((err) => {
         alert(err.response.data.message);
         console.log(err.response.data);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   };
 
@@ -105,10 +115,7 @@ export const AuthProvider = ({ children }) => {
         weight: weight,
       })
       .then((res) => {
-        setUserData(res.data);
-        AsyncStorage.setItem("userData", JSON.stringify(res.data));
-
-        return getUserData(userToken);
+        getUserData(userToken);
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -129,10 +136,13 @@ export const AuthProvider = ({ children }) => {
         workout,
       })
       .then((res) => {
-        setUserData(res.data);
-        AsyncStorage.setItem("userData", JSON.stringify(res.data));
+        let newUserData = userData;
+        newUserData.workouts.push(workout);
+        newUserData.lastWorkout = workout;
+        setUserData(newUserData);
 
-        return getUserData(userToken);
+        updateWorkoutStreak(newUserData);
+        getUserData(userToken);
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -143,17 +153,21 @@ export const AuthProvider = ({ children }) => {
       });
   };
 
-  const updateWorkoutStreak = (userData) => {
-    const todayDate = new Date();
+  const updateWorkoutStreak = (userDataParam) => {
+    if (userDataParam.workouts.length === 0) {
+      setWorkoutStreak(0);
+      return;
+    }
+    const workouts = userDataParam.workouts;
 
-    let lastWorkoutDate = userData.lastWorkout.date;
+    let lastWorkoutDate = workouts[workouts.length - 1].date;
     const [day, month, year] = lastWorkoutDate.split("/");
     lastWorkoutDate = new Date(year, month - 1, day);
 
     let twoDaysAgoDate = new Date();
     twoDaysAgoDate.setDate(twoDaysAgoDate.getDate() - 2);
 
-    let workoutDates = userData.workouts.map((workout) => {
+    let workoutDates = workouts.map((workout) => {
       let workoutDate = workout.date;
       const [day, month, year] = workoutDate.split("/");
       workoutDate = new Date(year, month - 1, day);
