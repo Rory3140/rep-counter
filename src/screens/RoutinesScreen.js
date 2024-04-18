@@ -4,20 +4,27 @@ import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { Button } from "../components/Button";
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Container } from "../components/Container";
+import { useNavigation } from "@react-navigation/native";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
 
 export const RoutinesScreen = () => {
+  const navigation = useNavigation();
   return (
-    <ScreenContainer>
-      <Button label={"Create New Routine"} onPress={() => {}} />
+    <ScreenContainer isScrollable={true}>
+      <Button
+        label={"Create New Routine"}
+        onPress={() => navigation.navigate("RoutinesCreation")}
+      />
       <Container style={styles.Line}></Container>
       <Button
-        label={"Routine 1(White backround)Arrow to right"}
+        label={"Routine 1"}
         style={styles.routineButton}
         onPress={() => {}}
         textColor={colors.black}
+        isVis={true}
+        flexDirection={"row"}
       />
     </ScreenContainer>
   );
