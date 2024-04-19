@@ -163,8 +163,8 @@ export const AuthProvider = ({ children }) => {
     const [day, month, year] = lastWorkoutDate.split("/");
     lastWorkoutDate = new Date(year, month - 1, day);
 
-    let twoDaysAgoDate = new Date();
-    twoDaysAgoDate.setDate(twoDaysAgoDate.getDate() - 2);
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
 
     let workoutDates = workouts.map((workout) => {
       let workoutDate = workout.date;
@@ -173,7 +173,7 @@ export const AuthProvider = ({ children }) => {
       return workoutDate;
     });
 
-    if (lastWorkoutDate <= twoDaysAgoDate) {
+    if (lastWorkoutDate < yesterday) {
       setWorkoutStreak(0);
     } else {
       let streak = 0;

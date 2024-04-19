@@ -13,7 +13,7 @@ import { sizes, fontSizes } from "../utils/sizes";
 export const HomeScreen = () => {
   const { workoutStreak } = useContext(AuthContext);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation();  
 
   return (
     <ScreenContainer>
