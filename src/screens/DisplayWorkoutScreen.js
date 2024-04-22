@@ -9,13 +9,12 @@ import {
 
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Container } from "../components/Container";
-import { Button } from "../components/Button";
 import { AuthContext } from "../context/AuthContext";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
 
-export const DisplayWorkout = ({ route }) => {
+export const DisplayWorkoutScreen = ({ route }) => {
   const { workout } = route.params;
 
   return (

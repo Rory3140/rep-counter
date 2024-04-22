@@ -5,8 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { HomeScreen } from "../screens/HomeScreen";
 import { LogScreen } from "../screens/LogScreen";
-import { DisplayWorkout } from "../screens/DisplayWorkout";
-import { StartWorkout } from "../screens/StartWorkout";
+import { DisplayWorkoutScreen } from "../screens/DisplayWorkoutScreen";
 import { WorkoutScreen } from "../screens/WorkoutScreen";
 import { RoutinesScreen } from "../screens/RoutinesScreen";
 import { RoutinesCreation } from "../screens/RoutinesCreation";
@@ -36,7 +35,7 @@ const LogStack = () => {
       <Stack.Screen name="Log" component={LogScreen} />
       <Stack.Screen
         name="DisplayWorkout"
-        component={DisplayWorkout}
+        component={DisplayWorkoutScreen}
         options={{ header: () => <TitleBar showBackButton={true} /> }}
       />
     </Stack.Navigator>
@@ -74,8 +73,8 @@ export const AppStack = () => {
         }}
       />
       <Tab.Screen
-        name="StartWorkout"
-        component={StartWorkout}
+        name="Workout"
+        component={WorkoutScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <WorkoutIcon width={50} height={50} fill={color} />
@@ -115,14 +114,6 @@ export const AppStack = () => {
           header: () => (
             <TitleBar showBackButton={true} showProfileButton={false} />
           ),
-          tabBarButton: () => null,
-        }}
-      />
-      <Tab.Screen
-        name="Workout"
-        component={WorkoutScreen}
-        options={{
-          header: () => <TitleBar showBackButton={true} />,
           tabBarButton: () => null,
         }}
       />

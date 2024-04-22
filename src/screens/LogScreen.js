@@ -9,6 +9,7 @@ import {
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 
+
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Container } from "../components/Container";
 import { AuthContext } from "../context/AuthContext";
