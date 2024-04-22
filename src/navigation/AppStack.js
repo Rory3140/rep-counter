@@ -1,9 +1,11 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import { HomeScreen } from "../screens/HomeScreen";
 import { LogScreen } from "../screens/LogScreen";
+import { DisplayWorkout } from "../screens/DisplayWorkout";
 import { StartWorkout } from "../screens/StartWorkout";
 import { WorkoutScreen } from "../screens/WorkoutScreen";
 import { RoutinesScreen } from "../screens/RoutinesScreen";
@@ -21,6 +23,25 @@ import StatsIcon from "../../assets/icons/graph";
 import { colors } from "../utils/colors";
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const LogStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Log"
+      screenOptions={{
+        header: () => <TitleBar />,
+      }}
+    >
+      <Stack.Screen name="Log" component={LogScreen} />
+      <Stack.Screen
+        name="DisplayWorkout"
+        component={DisplayWorkout}
+        options={{ header: () => <TitleBar showBackButton={true} /> }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export const AppStack = () => {
   return (
@@ -43,12 +64,13 @@ export const AppStack = () => {
         }}
       />
       <Tab.Screen
-        name="Log"
-        component={LogScreen}
+        name="LogStack"
+        component={LogStack}
         options={{
           tabBarIcon: ({ color }) => (
             <LogIcon width={50} height={50} fill={color} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen
