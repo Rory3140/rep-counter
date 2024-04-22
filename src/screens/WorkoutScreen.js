@@ -29,7 +29,11 @@ export const WorkoutScreen = () => {
     const startTime = new Date().toLocaleTimeString();
     setStartTime(startTime);
 
-    const date = new Date().toLocaleDateString();
+    const date = new Date().toLocaleDateString("en-US", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+    });
     setDate(date);
   }, []);
 

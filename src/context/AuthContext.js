@@ -152,6 +152,11 @@ export const AuthProvider = ({ children }) => {
       });
   };
 
+  function stringToDate(dateString) {
+    const [month, day, year] = dateString.split("/");
+    return new Date(year, month - 1, day);
+  }
+
   const updateWorkoutStreak = (userDataParam) => {
     if (userDataParam.workouts.length === 0) {
       setWorkoutStreak(0);
@@ -160,18 +165,28 @@ export const AuthProvider = ({ children }) => {
     const workouts = userDataParam.workouts;
 
     let lastWorkoutDate = workouts[workouts.length - 1].date;
-    const [day, month, year] = lastWorkoutDate.split("/");
-    lastWorkoutDate = new Date(year, month - 1, day);
+    lastWorkoutDate = stringToDate(lastWorkoutDate);
 
     let yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
 
     let workoutDates = workouts.map((workout) => {
       let workoutDate = workout.date;
-      const [day, month, year] = workoutDate.split("/");
-      workoutDate = new Date(year, month - 1, day);
-      return workoutDate;
+      return stringToDate(workoutDate);
     });
+
+    let uniqueDatesSet = new Set();
+    let uniqueWorkoutDates = [];
+
+    workoutDates.forEach((date) => {
+      let timeNumber = date.getTime();
+
+      if (!uniqueDatesSet.has(timeNumber)) {
+        uniqueDatesSet.add(timeNumber);
+        uniqueWorkoutDates.push(date);
+      }
+    });
+    workoutDates = uniqueWorkoutDates;
 
     if (lastWorkoutDate < yesterday) {
       setWorkoutStreak(0);
