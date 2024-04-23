@@ -19,23 +19,12 @@ export const WorkoutScreen = () => {
   const { addWorkout } = useContext(AuthContext);
 
   const [finishedWorkout, setFinishedWorkout] = useState(false);
+  const [startedWorkout, setStartedWorkout] = useState(false);
+
   const [workoutName, setWorkoutName] = useState("");
-  const [date, setDate] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [exercises, setExercises] = useState([]);
-
-  useEffect(() => {
-    const startTime = new Date().toLocaleTimeString();
-    setStartTime(startTime);
-
-    const date = new Date().toLocaleDateString("en-US", {
-      month: "2-digit",
-      day: "2-digit",
-      year: "numeric",
-    });
-    setDate(date);
-  }, []);
 
   const addExercise = () => {
     const newExercise = {
@@ -59,15 +48,66 @@ export const WorkoutScreen = () => {
   const createWorkout = () => {
     const endTime = new Date().toLocaleTimeString();
     setEndTime(endTime);
+    const date = new Date().toLocaleDateString("en-US", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+    });
+
+    // remove empty sets
+    let updatedExercises = exercises.map((exercise) => {
+      const updatedSets = exercise.sets.filter(
+        (set) => set.reps !== 0 || set.weight !== 0 || set.note !== ""
+      );
+      return { ...exercise, sets: updatedSets };
+    });
+
+    // remove empty exercises
+    updatedExercises = updatedExercises.filter(
+      (exercise) => exercise.sets.length > 0
+    );
+
+    setExercises(updatedExercises);
+
+    // check if there is a workout name
+    if (workoutName === "") {
+      alert("Please enter a workout name");
+      return;
+    }
+
+    // check if all exercises that have sets has a name
+    const hasEmptyExerciseName = updatedExercises.some(
+      (exercise) => exercise.exerciseName === ""
+    );
+    if (hasEmptyExerciseName) {
+      alert("Please enter a name for all exercises");
+      return;
+    }
+
+    // check if there are any exercises with sets
+    if (updatedExercises.length === 0) {
+      alert("Please enter at least one exercise with a set");
+      return;
+    }
+
+    // check if all sets have reps
+    const hasEmptyReps = updatedExercises.some((exercise) =>
+      exercise.sets.some((set) => set.reps === 0)
+    );
+    if (hasEmptyReps) {
+      alert("Please enter a rep count for all sets");
+      return;
+    }
 
     const workout = {
       workoutName,
       date,
       startTime,
       endTime,
-      exercises,
+      exercises: updatedExercises,
     };
     addWorkout(workout);
+    setFinishedWorkout(true);
   };
 
   const resetWorkout = () => {
@@ -76,6 +116,16 @@ export const WorkoutScreen = () => {
     setStartTime(new Date().toLocaleTimeString());
     setEndTime("");
     setExercises([]);
+  };
+
+  const startWorkout = () => {
+    if (workoutName === "") {
+      alert("Please enter a workout name");
+      return;
+    }
+
+    setStartedWorkout(true);
+    setStartTime(new Date().toLocaleTimeString());
   };
 
   return (
@@ -94,18 +144,20 @@ export const WorkoutScreen = () => {
             editable={!finishedWorkout}
           />
         </Container>
+        {startedWorkout && (
+          <>
+            <Container style={styles.textbox}>
+              <Text style={styles.text}>Start time:</Text>
+              <Text style={styles.text}>{startTime}</Text>
+            </Container>
 
-        <Container style={styles.textbox}>
-          <Text style={styles.text}>Start time:</Text>
-          <Text style={styles.text}>{startTime}</Text>
-        </Container>
-
-        <Container style={styles.textbox}>
-          <Text style={styles.text}>End time:</Text>
-          <Text style={styles.text}>{endTime}</Text>
-        </Container>
-
-        {!finishedWorkout && (
+            <Container style={styles.textbox}>
+              <Text style={styles.text}>End time:</Text>
+              <Text style={styles.text}>{endTime}</Text>
+            </Container>
+          </>
+        )}
+        {startedWorkout && !finishedWorkout && (
           <TouchableOpacity onPress={resetWorkout}>
             <Text style={styles.textButton}>Restart Workout</Text>
           </TouchableOpacity>
@@ -219,28 +271,36 @@ export const WorkoutScreen = () => {
         </Container>
       ))}
 
-      {!finishedWorkout ? (
-        <>
-          <Button
-            label={"Add Exercise"}
-            onPress={() => {
-              addExercise();
-            }}
-          />
+      {startedWorkout ? (
+        !finishedWorkout ? (
+          <>
+            <Button
+              label={"Add Exercise"}
+              onPress={() => {
+                addExercise();
+              }}
+            />
 
+            <Button
+              label={"Finish Workout"}
+              onPress={() => {
+                createWorkout();
+              }}
+            />
+          </>
+        ) : (
           <Button
-            label={"Finish Workout"}
+            label={"Start New Workout"}
             onPress={() => {
-              setFinishedWorkout(true);
-              createWorkout();
+              resetWorkout();
             }}
           />
-        </>
+        )
       ) : (
         <Button
-          label={"Start New Workout"}
+          label={"Start Workout"}
           onPress={() => {
-            resetWorkout();
+            startWorkout();
           }}
         />
       )}
