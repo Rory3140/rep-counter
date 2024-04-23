@@ -8,7 +8,7 @@ import { LogScreen } from "../screens/LogScreen";
 import { DisplayWorkoutScreen } from "../screens/DisplayWorkoutScreen";
 import { WorkoutScreen } from "../screens/WorkoutScreen";
 import { RoutinesScreen } from "../screens/RoutinesScreen";
-import { RoutinesCreation } from "../screens/RoutinesCreation";
+import { CreateRoutineScreen } from "../screens/CreateRoutineScreen";
 import { StatsScreen } from "../screens/StatsScreen";
 import { ProfileScreen } from "../screens/ProfileScreen";
 import { TitleBar } from "../components/TitleBar";
@@ -36,6 +36,24 @@ const LogStack = () => {
       <Stack.Screen
         name="DisplayWorkout"
         component={DisplayWorkoutScreen}
+        options={{ header: () => <TitleBar showBackButton={true} /> }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const RoutineStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Routines"
+      screenOptions={{
+        header: () => <TitleBar />,
+      }}
+    >
+      <Stack.Screen name="Routines" component={RoutinesScreen} />
+      <Stack.Screen
+        name="CreateRoutine"
+        component={CreateRoutineScreen}
         options={{ header: () => <TitleBar showBackButton={true} /> }}
       />
     </Stack.Navigator>
@@ -82,20 +100,12 @@ export const AppStack = () => {
         }}
       />
       <Tab.Screen
-        name="Routines"
-        component={RoutinesScreen}
+        name="RoutineStack"
+        component={RoutineStack}
         options={{
           tabBarIcon: ({ color }) => (
             <RoutinesIcon width={50} height={50} fill={color} />
           ),
-        }}
-      />
-      <Tab.Screen
-        name="RoutinesCreation"
-        component={RoutinesCreation}
-        options={{
-          header: () => <TitleBar showBackButton={true} />,
-          tabBarButton: () => null,
         }}
       />
       <Tab.Screen

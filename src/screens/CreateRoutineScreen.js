@@ -15,7 +15,7 @@ import { AuthContext } from "../context/AuthContext";
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
 
-export const RoutinesCreation = () => {
+export const CreateRoutineScreen = () => {
   const { addRoutine } = useContext(AuthContext);
 
   const [workoutName, setWorkoutName] = useState("");

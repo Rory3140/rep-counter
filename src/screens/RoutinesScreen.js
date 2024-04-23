@@ -15,7 +15,7 @@ export const RoutinesScreen = () => {
     <ScreenContainer isScrollable={true}>
       <Button
         label={"Create New Routine"}
-        onPress={() => navigation.navigate("RoutinesCreation")}
+        onPress={() => navigation.navigate("CreateRoutine")}
       />
       <Container style={styles.Line}></Container>
       <Button
