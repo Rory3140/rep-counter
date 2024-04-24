@@ -106,6 +106,7 @@ export const AppStack = () => {
           tabBarIcon: ({ color }) => (
             <RoutinesIcon width={50} height={50} fill={color} />
           ),
+          headerShown: false,
         }}
       />
       <Tab.Screen

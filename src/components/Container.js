@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
     width: "95%",
-    height: "fit-content",
+    height: "auto",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: sizes.md,

@@ -167,8 +167,8 @@ export const AuthProvider = ({ children }) => {
     let lastWorkoutDate = workouts[workouts.length - 1].date;
     lastWorkoutDate = stringToDate(lastWorkoutDate);
 
-    let yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
+    let twoDaysAgo = new Date();
+    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
 
     let workoutDates = workouts.map((workout) => {
       let workoutDate = workout.date;
@@ -188,7 +188,7 @@ export const AuthProvider = ({ children }) => {
     });
     workoutDates = uniqueWorkoutDates;
 
-    if (lastWorkoutDate < yesterday) {
+    if (lastWorkoutDate < twoDaysAgo) {
       setWorkoutStreak(0);
     } else {
       let streak = 0;

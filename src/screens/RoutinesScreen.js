@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   routineButton: {
     backgroundColor: colors.white,
     width: "95%",
-    height: "fit-content",
+    height: "auto",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: sizes.md,
