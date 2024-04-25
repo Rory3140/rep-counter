@@ -92,8 +92,6 @@ export const AuthProvider = ({ children }) => {
       .then((res) => {
         setUserData(res.data);
         AsyncStorage.setItem("userData", JSON.stringify(res.data));
-
-        updateWorkoutStreak(res.data);
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -142,6 +140,33 @@ export const AuthProvider = ({ children }) => {
 
         updateWorkoutStreak(newUserData);
         getUserData(userToken);
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+        console.log(err.response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const deleteWorkout = (workout) => {
+    setIsLoading(true);
+    return axios
+      .post(`https://deleteworkout-yet5ypcxwq-uc.a.run.app`, {
+        uid: userToken,
+        workout,
+      })
+      .then((res) => {
+        let newUserData = userData;
+        const newWorkouts = newUserData.workouts.filter(
+          (item) => item !== workout
+        );
+        newUserData.workouts = newWorkouts;
+
+        setUserData(newUserData);
+        updateWorkoutStreak(newUserData);
+        AsyncStorage.setItem("userData", JSON.stringify(newUserData));
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -250,11 +275,13 @@ export const AuthProvider = ({ children }) => {
         getUserData,
         updateProfile,
         addWorkout,
+        deleteWorkout,
         logout,
         userToken,
         userInfo,
         userData,
         workoutStreak,
+        updateWorkoutStreak,
       }}
     >
       {children}

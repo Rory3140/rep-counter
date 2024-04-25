@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,6 +10,7 @@ import {
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Container } from "../components/Container";
@@ -46,7 +47,7 @@ const WorkoutItem = ({ workout, deleteWorkout }) => {
 
   return (
     <View style={styles.itemContainer}>
-      <Swipeable renderRightActions={renderRightActions}>
+      <Swipeable renderRightActions={renderRightActions} overshootRight={false}>
         <TouchableOpacity
           style={styles.container}
           onPress={() =>
@@ -69,11 +70,13 @@ const WorkoutItem = ({ workout, deleteWorkout }) => {
 };
 
 export const LogScreen = () => {
-  const { userData } = useContext(AuthContext);
-  const workouts = userData.workouts;
+  const { userData, deleteWorkout } = useContext(AuthContext);
+  const [workouts, setWorkouts] = useState(userData.workouts);
 
-  const deleteWorkout = (workout) => {
-    console.log("Delete workout", workout);
+  const handleDelete = (workout) => {
+    deleteWorkout(workout).then(() => {
+      setWorkouts((prevState) => prevState.filter((item) => item !== workout));
+    });
   };
 
   return (
@@ -84,7 +87,7 @@ export const LogScreen = () => {
         .map((workout, index) => {
           return (
             <Container key={index} style={{ padding: 0 }}>
-              <WorkoutItem workout={workout} deleteWorkout={deleteWorkout} />
+              <WorkoutItem workout={workout} deleteWorkout={handleDelete} />
             </Container>
           );
         })}

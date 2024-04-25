@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -11,9 +11,16 @@ import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
 
 export const HomeScreen = () => {
-  const { workoutStreak } = useContext(AuthContext);
+  const { workoutStreak, updateWorkoutStreak, userData } =
+    useContext(AuthContext);
 
-  const navigation = useNavigation();  
+  useEffect(() => {
+    if (userData) {
+      updateWorkoutStreak(userData);
+    }
+  }, [userData]);
+
+  const navigation = useNavigation();
 
   return (
     <ScreenContainer>
