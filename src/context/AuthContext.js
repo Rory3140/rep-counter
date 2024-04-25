@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [userInfo, setUserInfo] = useState(null);
   const [userData, setUserData] = useState(null);
   const [workoutStreak, setWorkoutStreak] = useState(0);
+  const [image, setImage] = useState(null);
 
   const refreshUserData = async () => {
     const token = await AsyncStorage.getItem("userToken");
@@ -292,6 +293,8 @@ export const AuthProvider = ({ children }) => {
         userData,
         workoutStreak,
         updateWorkoutStreak,
+        image,
+        setImage,
       }}
     >
       {children}

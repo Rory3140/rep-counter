@@ -15,7 +15,6 @@ export const HomeScreen = () => {
     useContext(AuthContext);
 
   useEffect(() => {
-    console.log("Send last login date to backend");
     const lastLogin = new Date().toLocaleDateString("en-US", {
       month: "2-digit",
       day: "2-digit",

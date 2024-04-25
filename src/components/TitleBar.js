@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,20 +6,22 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Platform,
-  StatusBar,
+  Image,
 } from "react-native";
 import { useFonts } from "expo-font";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
+
+import Profile from "../../assets/icons/profile";
+import { Title } from "./Title";
+import { AuthContext } from "../context/AuthContext";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
 
-import Profile from "../../assets/icons/profile";
-import { Title } from "./Title";
-
 export const TitleBar = ({ showBackButton, showProfileButton = true }) => {
+  const { image } = useContext(AuthContext);
+
   const [fontsLoaded] = useFonts({
     norwester: require("../../assets/fonts/norwester.ttf"),
   });
@@ -50,7 +52,14 @@ export const TitleBar = ({ showBackButton, showProfileButton = true }) => {
           style={styles.profileIconWrapper}
           onPress={() => navigation.navigate("Profile")}
         >
-          <Profile width={50} height={50} fill={colors.darkGrey} />
+          {image ? (
+            <Image
+              source={{ uri: image }}
+              style={{ width: 50, height: 50, borderRadius: 25 }}
+            />
+          ) : (
+            <Profile width={50} height={50} fill={colors.darkGrey} />
+          )}
         </TouchableOpacity>
       )}
     </View>
