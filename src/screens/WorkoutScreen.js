@@ -64,7 +64,7 @@ export const WorkoutScreen = () => {
 
     // remove empty exercises
     updatedExercises = updatedExercises.filter(
-      (exercise) => exercise.sets.length > 0
+      (exercise) => exercise.sets.length > 0 && exercise.exerciseName !== ""
     );
 
     setExercises(updatedExercises);

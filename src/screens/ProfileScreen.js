@@ -66,7 +66,11 @@ export const ProfileScreen = () => {
           <Button
             label={"Update"}
             onPress={() => {
-              updateProfile(height, weight, setHeight, setWeight);
+              const data = {
+                height: height === "" ? userData.height : height,
+                weight: weight === "" ? userData.weight : weight,
+              };
+              updateProfile(data, setHeight, setWeight);
             }}
           />
         )}

@@ -11,11 +11,17 @@ import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
 
 export const HomeScreen = () => {
-  const { workoutStreak, updateWorkoutStreak, userData } =
+  const { workoutStreak, updateWorkoutStreak, userData, updateProfile } =
     useContext(AuthContext);
 
   useEffect(() => {
     console.log("Send last login date to backend");
+    const lastLogin = new Date().toLocaleDateString("en-US", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+    });
+    updateProfile({ lastLogin });
   }, []);
 
   useEffect(() => {

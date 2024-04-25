@@ -99,18 +99,26 @@ export const AuthProvider = ({ children }) => {
       });
   };
 
-  const updateProfile = (height, weight, setHeight, setWeight) => {
+  const updateProfile = (data, setHeight, setWeight) => {
     setIsLoading(true);
-    if (height === "") {
-      height = userData.height;
-    } else if (weight === "") {
-      weight = userData.weight;
+    const { lastLogin, photoURL, height, weight } = data;
+    const updateData = {};
+    if (lastLogin) {
+      updateData.lastLogin = lastLogin;
+    }
+    if (photoURL) {
+      updateData.photoURL = photoURL;
+    }
+    if (height) {
+      updateData.height = height;
+    }
+    if (weight) {
+      updateData.weight = weight;
     }
     return axios
       .post(`https://updateprofile-yet5ypcxwq-uc.a.run.app`, {
         uid: userToken,
-        height: height,
-        weight: weight,
+        updateData,
       })
       .then((res) => {
         getUserData(userToken);
@@ -120,8 +128,10 @@ export const AuthProvider = ({ children }) => {
         console.log(err.response.data);
       })
       .finally(() => {
-        setHeight("");
-        setWeight("");
+        if (setHeight && setWeight) {
+          setHeight("");
+          setWeight("");
+        }
         setIsLoading(false);
       });
   };
