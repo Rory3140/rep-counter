@@ -9,8 +9,8 @@ import {
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
+import { RectButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Container } from "../components/Container";
@@ -30,24 +30,29 @@ const WorkoutItem = ({ workout, deleteWorkout }) => {
     });
 
     return (
-      <Animated.View
-        style={[
-          styles.rightAction,
-          {
-            transform: [{ translateX: trans }],
-          },
-        ]}
+      <RectButton
+        onPress={() => {
+          this.close;
+          deleteWorkout(workout);
+        }}
       >
-        <TouchableOpacity onPress={() => deleteWorkout(workout)}>
+        <Animated.View
+          style={[
+            styles.rightAction,
+            {
+              transform: [{ translateX: trans }],
+            },
+          ]}
+        >
           <Text style={styles.actionText}>Delete</Text>
-        </TouchableOpacity>
-      </Animated.View>
+        </Animated.View>
+      </RectButton>
     );
   };
 
   return (
     <View style={styles.itemContainer}>
-      <Swipeable renderRightActions={renderRightActions} overshootRight={false}>
+      <Swipeable renderRightActions={renderRightActions}>
         <TouchableOpacity
           style={styles.container}
           onPress={() =>
@@ -73,10 +78,15 @@ export const LogScreen = () => {
   const { userData, deleteWorkout } = useContext(AuthContext);
   const [workouts, setWorkouts] = useState(userData.workouts);
 
+  useEffect(() => {
+    if (userData) {
+      setWorkouts(userData.workouts);
+    }
+  }, [userData]);
+
   const handleDelete = (workout) => {
-    deleteWorkout(workout).then(() => {
-      setWorkouts((prevState) => prevState.filter((item) => item !== workout));
-    });
+    deleteWorkout(workout);
+    setWorkouts(workouts.filter((item) => item !== workout));
   };
 
   return (

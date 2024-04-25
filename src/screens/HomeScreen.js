@@ -15,6 +15,10 @@ export const HomeScreen = () => {
     useContext(AuthContext);
 
   useEffect(() => {
+    console.log("Send last login date to backend");
+  }, []);
+
+  useEffect(() => {
     if (userData) {
       updateWorkoutStreak(userData);
     }
