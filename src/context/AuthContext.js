@@ -277,11 +277,6 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    isLoggedIn();
-    AsyncStorage.clear();
-  }, []);
-
   return (
     <AuthContext.Provider
       value={{
