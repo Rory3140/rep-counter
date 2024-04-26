@@ -9,12 +9,16 @@ import { AuthContext } from "../context/AuthContext";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
+import { quotes } from "../utils/quotes";
 
 export const HomeScreen = () => {
+  const [quoteOfTheDay, setQuoteOfTheDay] = useState("");
   const { workoutStreak, updateWorkoutStreak, userData, updateProfile } =
     useContext(AuthContext);
 
   useEffect(() => {
+    const dayIndex = new Date().getDay();
+    setQuoteOfTheDay(quotes[dayIndex]);
     const lastLogin = new Date().toLocaleDateString("en-US", {
       month: "2-digit",
       day: "2-digit",
@@ -50,6 +54,11 @@ export const HomeScreen = () => {
 
       <Container style={styles.quoteOfTheDayWrapper}>
         <Text style={styles.text}>Quote of the Day</Text>
+        <Text
+          style={{ fontSize: fontSizes.md, textAlign: "center", paddingTop: 5 }}
+        >
+          {quoteOfTheDay}
+        </Text>
       </Container>
 
       <Container style={styles.statsWrapper}>

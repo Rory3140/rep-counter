@@ -29,17 +29,6 @@ export const CreateRoutineScreen = () => {
     setExercises([...exercises, newExercise]);
   };
 
-  const addSet = (index) => {
-    const newSet = {
-      reps: 0,
-      weight: 0,
-      note: "",
-    };
-    const updatedExercises = [...exercises];
-    updatedExercises[index].sets.push(newSet);
-    setExercises(updatedExercises);
-  };
-
   const createRoutine = () => {
     const routine = {
       workoutName,
@@ -84,73 +73,7 @@ export const CreateRoutineScreen = () => {
             />
           </Container>
 
-          {exercise.sets.map((set, setIndex) => (
-            <Container key={setIndex}>
-              <Container style={styles.textbox}>
-                <Text style={styles.text}>Reps:</Text>
-                <TextInput
-                  style={styles.textInput}
-                  value={set.reps === 0 ? "" : set.reps.toString()}
-                  onChangeText={(text) => {
-                    const updatedExercises = [...exercises];
-                    updatedExercises[index].sets[setIndex].reps = text;
-                    setExercises(updatedExercises);
-                  }}
-                  keyboardType="number-pad"
-                  returnKeyType="done"
-                  placeholder="Rep Count"
-                  maxLength={3}
-                />
-              </Container>
-
-              <Container style={styles.textbox}>
-                <Text style={styles.text}>Weight:</Text>
-                <TextInput
-                  style={styles.textInput}
-                  value={set.weight === 0 ? "" : set.weight.toString()}
-                  onChangeText={(text) => {
-                    const updatedExercises = [...exercises];
-                    updatedExercises[index].sets[setIndex].weight = text;
-                    setExercises(updatedExercises);
-                  }}
-                  keyboardType="number-pad"
-                  returnKeyType="done"
-                  placeholder="Weight in lbs"
-                  maxLength={3}
-                />
-              </Container>
-
-              <Container style={styles.textbox}>
-                <Text style={styles.text}>Note:</Text>
-                <TextInput
-                  style={styles.textInput}
-                  value={set.note}
-                  onChangeText={(text) => {
-                    const updatedExercises = [...exercises];
-                    updatedExercises[index].sets[setIndex].note = text;
-                    setExercises(updatedExercises);
-                  }}
-                  keyboardType="default"
-                  returnKeyType="done"
-                  placeholder="Note"
-                  maxLength={20}
-                />
-              </Container>
-
-              <TouchableOpacity
-                onPress={() => {
-                  const updatedExercises = [...exercises];
-                  updatedExercises[index].sets.splice(setIndex, 1);
-                  setExercises(updatedExercises);
-                }}
-              >
-                <Text style={styles.textButton}>Delete Set</Text>
-              </TouchableOpacity>
-            </Container>
-          ))}
-
           <>
-            <Button label={"Add Set"} onPress={() => addSet(index)} />
             <TouchableOpacity
               onPress={() => {
                 const updatedExercises = [...exercises];
