@@ -11,8 +11,12 @@ import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
 
 export const HomeScreen = () => {
-  const { workoutStreak, updateWorkoutStreak, userData, updateProfile } =
-    useContext(AuthContext);
+  const {
+    workoutStreak,
+    updateWorkoutStreak,
+    userData,
+    updateProfile,
+  } = useContext(AuthContext);
 
   useEffect(() => {
     const lastLogin = new Date().toLocaleDateString("en-US", {
