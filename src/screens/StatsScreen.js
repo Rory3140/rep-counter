@@ -119,10 +119,29 @@ export const StatsScreen = () => {
   const [selectedMetric, setSelectedMetric] = useState('reps');
   const [selectedTimeFrame, setSelectedTimeFrame] = useState('week');
   const [selectedSubject, setSelectedSubject] = useState('General');
-  //-------------------------COLE START HERE----------------------------------
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategory, setSelectedSubCategory] = useState('none');
   const [data, setData] = useState([]);
+
+  useEffect(() => {
+    let newSubCategories = [];
+    if (selectedSubject == 'Workout') {
+      // Extract workout names if that's the selected subject.
+      newSubCategories = [...new Set(userData.workouts.map(workout => workout.workoutName))];
+    } else if (selectedSubject == 'Routine') {
+      // Assuming routines are structured similarly within userData
+      newSubCategories = [...new Set(userData.routines.map(routine => routine.name))];
+    } else if (selectedSubject == 'Exercise') {
+      // Extracting unique exercise names from all workouts
+      newSubCategories = [...new Set(userData.workouts.flatMap(workout => workout.exercises.map(exercise => exercise.exerciseName)))];
+    }
+    setSubCategories(newSubCategories);
+    // Reset the selected subcategory when the subject changes
+    setSelectedSubCategory(newSubCategories.length > 0 ? newSubCategories[0] : 'none');
+  }, [selectedSubject, userData]);
+  
+  
+  
 
   useEffect(() => {
     const totalWorkouts = userData.workouts.length;
@@ -134,20 +153,20 @@ export const StatsScreen = () => {
       if (workoutDate >= start && workoutDate <= end) {
         let index = getIndex(workoutDate, start, userData.workouts, selectedTimeFrame);
 
-        if (selectedMetric === 'time') {
+        if (selectedMetric == 'time') {
           results[index] += 1; 
         } else {
           workout.exercises.forEach(exercise => {
-            if (selectedSubCategory === 'none' || exercise.name === selectedSubCategory) {
-              if (selectedMetric === 'category') {
+            if (selectedSubCategory == 'none' || exercise.name == selectedSubCategory) {
+              if (selectedMetric == 'category') {
                 results[index] += 1;
-              } else if (selectedMetric === 'sets') {
+              } else if (selectedMetric == 'sets') {
                 results[index] += exercise.sets.length;
               } else {
                 exercise.sets.forEach(set => {
-                  if (selectedMetric === 'reps') {
+                  if (selectedMetric == 'reps') {
                     results[index] += parseInt(set.reps, 10);
-                  } else if (selectedMetric === 'weight') {
+                  } else if (selectedMetric == 'weight') {
                     results[index] += parseInt(set.weight, 10);
                   }
                 });
@@ -166,12 +185,13 @@ export const StatsScreen = () => {
 
   return (
     <ScreenContainer>
-      <SafeAreaView>
+      <SafeAreaView style = {{backgroundColor: colors.darkGrey}}>
         <View style={styles.chartContainer}>
-          <VictoryChart width={screenWidth} height={320}>
+          <VictoryChart width={screenWidth - 20} height={340}>
             <VictoryLine
               data={data}
-              style={{ data: { stroke: colors.darkGrey } }}
+              style={{ data: { stroke: colors.offWhite},
+                      labels: { fill: colors.offWhite} }}
               interpolation="natural"
             />
             <VictoryAxis fixLabelOverlap={true} />
@@ -219,7 +239,6 @@ export const StatsScreen = () => {
             onValueChange={(itemValue, itemIndex) => setSelectedSubCategory(itemValue)}
             style={styles.picker}
           >
-  {/* need to set the subcategories COLE CONTINUE HERE---------------------------- */}
             {subCategories.map((name, index) => (
               <Picker.Item key={index} label={name} value={name} />
             ))}
@@ -234,12 +253,16 @@ export const StatsScreen = () => {
 const styles = StyleSheet.create({
   chartContainer: {
     flex: 1,
-    marginBottom: 20,
+    marginHorizontal: 10,
+    marginVertical: 60,
+    backgroundColor: colors.offWhite,
+    justifyContent: 'center',
+    borderRadius: 13,
+
   },
   picker: {
     height: 30,
     width: 200,
-    marginVertical: 5,
     textAlign: 'center',
     backgroundColor: colors.primary,
     color: colors.offWhite,
