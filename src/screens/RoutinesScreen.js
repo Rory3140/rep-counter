@@ -4,13 +4,24 @@ import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { Button } from "../components/Button";
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Container } from "../components/Container";
-import { useNavigation } from "@react-navigation/native";
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { useState, useEffect } from "react";
 
-export const RoutinesScreen = () => {
+export const RoutinesScreen = ({ route }) => {
+  const { createdRoutine } = route.params || {};
+
   const navigation = useNavigation();
+  const [routines, setRoutines] = useState([]);
+
+  useEffect(() => {
+    if (createdRoutine) {
+      setRoutines([...routines, createdRoutine]);
+    }
+  }, [createdRoutine]);
+
   return (
     <ScreenContainer isScrollable={true}>
       <Button
@@ -18,14 +29,23 @@ export const RoutinesScreen = () => {
         onPress={() => navigation.navigate("CreateRoutine")}
       />
       <Container style={styles.Line}></Container>
-      <Button
-        label={"Routine 1"}
-        style={styles.routineButton}
-        onPress={() => {}}
-        textColor={colors.black}
-        isVis={true}
-        flexDirection={"row"}
-      />
+      {routines.map((routine, index) => {
+        return (
+          <Button
+            key={index}
+            label={routine.workoutName}
+            onPress={() => {
+              navigation.navigate("Workout", {
+                routine: routine,
+              });
+            }}
+            style={styles.routineButton}
+            textColor={colors.black}
+            isVis={true}
+            flexDirection={"row"}
+          />
+        );
+      })}
     </ScreenContainer>
   );
 };

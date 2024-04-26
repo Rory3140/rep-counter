@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Container } from "../components/Container";
@@ -16,10 +17,10 @@ import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
 
 export const CreateRoutineScreen = () => {
-  const { addRoutine } = useContext(AuthContext);
-
   const [workoutName, setWorkoutName] = useState("");
   const [exercises, setExercises] = useState([]);
+
+  const navigation = useNavigation();
 
   const addExercise = () => {
     const newExercise = {
@@ -34,14 +35,16 @@ export const CreateRoutineScreen = () => {
       workoutName,
       exercises,
     };
-    addRoutine(routine);
+    navigation.navigate("Routines", {
+      createdRoutine: routine,
+    });
   };
 
   return (
     <ScreenContainer isScrollable>
       <Container>
         <Container style={styles.textbox}>
-          <Text style={styles.text}>Workout Name:</Text>
+          <Text style={styles.text}>Routine Name:</Text>
           <TextInput
             style={styles.textInput}
             onChangeText={(text) => setWorkoutName(text)}
@@ -98,7 +101,7 @@ export const CreateRoutineScreen = () => {
         <Button
           label={"Create Routine"}
           onPress={() => {
-            // This will trigger the routine being created
+            createRoutine();
           }}
         />
       </>

@@ -15,7 +15,9 @@ import { AuthContext } from "../context/AuthContext";
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
 
-export const WorkoutScreen = () => {
+export const WorkoutScreen = ({ route }) => {
+  const { routine } = route.params || {};
+
   const { addWorkout } = useContext(AuthContext);
 
   const [finishedWorkout, setFinishedWorkout] = useState(false);
@@ -24,7 +26,15 @@ export const WorkoutScreen = () => {
   const [workoutName, setWorkoutName] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
+
   const [exercises, setExercises] = useState([]);
+
+  useEffect(() => {
+    if (routine) {
+      setWorkoutName(routine.workoutName);
+      setExercises(routine.exercises);
+    }
+  }, [routine]);
 
   const addExercise = () => {
     const newExercise = {
