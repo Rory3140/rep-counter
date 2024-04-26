@@ -5,6 +5,8 @@ import { Picker } from '@react-native-picker/picker';
 import { AuthContext } from "../context/AuthContext";
 import { ScreenContainer } from "../components/ScreenContainer";
 import { colors } from "../utils/colors";
+import { sizes, fontSizes } from "../utils/sizes";
+
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -177,6 +179,7 @@ export const StatsScreen = () => {
             <VictoryAxis dependentAxis />
           </VictoryChart>
         </View>
+        <View >
         <View style={styles.dropdownWrapper}>
           <Picker
             selectedValue={selectedMetric}
@@ -200,6 +203,8 @@ export const StatsScreen = () => {
             <Picker.Item label="Year" value="year" />
             <Picker.Item label="All Time" value="ever" />
           </Picker>
+          </View>
+          <View style={styles.dropdownWrapper}>
           <Picker
             selectedValue={selectedSubject}
             onValueChange={(itemValue, itemIndex) => setSelectedSubject(itemValue)}
@@ -219,6 +224,7 @@ export const StatsScreen = () => {
               <Picker.Item key={index} label={name} value={name} />
             ))}
           </Picker>
+          </View>
         </View>
       </SafeAreaView>
     </ScreenContainer>
@@ -234,10 +240,15 @@ const styles = StyleSheet.create({
     height: 30,
     width: 200,
     marginVertical: 5,
+    textAlign: 'center',
     backgroundColor: colors.primary,
+    color: colors.offWhite,
+    
   },
   dropdownWrapper: {
     flexDirection: 'row',
     backgroundColor: colors.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });
