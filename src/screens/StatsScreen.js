@@ -10,7 +10,6 @@ import { sizes, fontSizes } from "../utils/sizes";
 
 const screenWidth = Dimensions.get('window').width;
 
-// Utility functions should be defined outside the component to avoid redefinitions on each render
 const calculateMonths = (start, end) => {
   const startDate = new Date(start);
   const endDate = new Date(end);
@@ -120,6 +119,7 @@ export const StatsScreen = () => {
   const [selectedMetric, setSelectedMetric] = useState('reps');
   const [selectedTimeFrame, setSelectedTimeFrame] = useState('week');
   const [selectedSubject, setSelectedSubject] = useState('General');
+  //-------------------------COLE START HERE----------------------------------
   const [subCategories, setSubCategories] = useState([]);
   const [selectedSubCategory, setSelectedSubCategory] = useState('none');
   const [data, setData] = useState([]);
@@ -134,9 +134,8 @@ export const StatsScreen = () => {
       if (workoutDate >= start && workoutDate <= end) {
         let index = getIndex(workoutDate, start, userData.workouts, selectedTimeFrame);
 
-        // Handling 'time' as a metric for simply counting workouts
         if (selectedMetric === 'time') {
-          results[index] += 1; // Each workout contributes a count of 1
+          results[index] += 1; 
         } else {
           workout.exercises.forEach(exercise => {
             if (selectedSubCategory === 'none' || exercise.name === selectedSubCategory) {
@@ -160,7 +159,7 @@ export const StatsScreen = () => {
     });
 
     setData(results.map((total, idx) => ({
-      x: getLabel(idx, selectedTimeFrame, start, totalWorkouts), // Pass totalWorkouts to getLabel
+      x: getLabel(idx, selectedTimeFrame, start, totalWorkouts),
       y: total
     })));
   }, [selectedMetric, selectedTimeFrame, selectedSubCategory, selectedSubject, userData]);
@@ -220,6 +219,7 @@ export const StatsScreen = () => {
             onValueChange={(itemValue, itemIndex) => setSelectedSubCategory(itemValue)}
             style={styles.picker}
           >
+  {/* need to set the subcategories COLE CONTINUE HERE---------------------------- */}
             {subCategories.map((name, index) => (
               <Picker.Item key={index} label={name} value={name} />
             ))}

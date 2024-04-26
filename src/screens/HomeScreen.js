@@ -62,6 +62,7 @@ export const HomeScreen = () => {
       </Container>
 
       <Container style={styles.statsWrapper}>
+      {/*COLE START HERE----------------------------------------------------------- */}
         <Text style={styles.text}>Stats</Text>
       </Container>
     </ScreenContainer>
