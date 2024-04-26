@@ -26,6 +26,10 @@ export const AuthProvider = ({ children }) => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    isLoggedIn();
+  }, []);
+
   const login = (email, password, setPassword) => {
     setIsLoading(true);
     return axios
@@ -275,6 +279,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     isLoggedIn();
+    AsyncStorage.clear();
   }, []);
 
   return (
