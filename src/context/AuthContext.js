@@ -275,7 +275,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     isLoggedIn();
-    AsyncStorage.clear();
+    //AsyncStorage.clear();
   }, []);
 
   return (
