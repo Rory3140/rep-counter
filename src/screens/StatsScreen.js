@@ -7,7 +7,6 @@ import { ScreenContainer } from "../components/ScreenContainer";
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
 
-
 const screenWidth = Dimensions.get('window').width;
 
 const calculateMonths = (start, end) => {
@@ -125,13 +124,13 @@ export const StatsScreen = () => {
 
   useEffect(() => {
     let newSubCategories = [];
-    if (selectedSubject == 'Workout') {
+    if (selectedSubject === 'Workout') {
       // Extract workout names if that's the selected subject.
       newSubCategories = [...new Set(userData.workouts.map(workout => workout.workoutName))];
-    } else if (selectedSubject == 'Routine') {
+    } else if (selectedSubject === 'Routine') {
       // Assuming routines are structured similarly within userData
       newSubCategories = [...new Set(userData.routines.map(routine => routine.name))];
-    } else if (selectedSubject == 'Exercise') {
+    } else if (selectedSubject === 'Exercise') {
       // Extracting unique exercise names from all workouts
       newSubCategories = [...new Set(userData.workouts.flatMap(workout => workout.exercises.map(exercise => exercise.exerciseName)))];
     }
@@ -139,9 +138,6 @@ export const StatsScreen = () => {
     // Reset the selected subcategory when the subject changes
     setSelectedSubCategory(newSubCategories.length > 0 ? newSubCategories[0] : 'none');
   }, [selectedSubject, userData]);
-  
-  
-  
 
   useEffect(() => {
     const totalWorkouts = userData.workouts.length;
@@ -153,35 +149,32 @@ export const StatsScreen = () => {
       if (workoutDate >= start && workoutDate <= end) {
         let index = getIndex(workoutDate, start, userData.workouts, selectedTimeFrame);
 
-        if (selectedMetric == 'time') {
-          results[index] += 1; 
-        } else {
-          workout.exercises.forEach(exercise => {
-            if (selectedSubCategory == 'none' || exercise.name == selectedSubCategory) {
-              if (selectedMetric == 'category') {
-                results[index] += 1;
-              } else if (selectedMetric == 'sets') {
-                results[index] += exercise.sets.length;
-              } else {
-                exercise.sets.forEach(set => {
-                  if (selectedMetric == 'reps') {
-                    results[index] += parseInt(set.reps, 10);
-                  } else if (selectedMetric == 'weight') {
-                    results[index] += parseInt(set.weight, 10);
-                  }
-                });
-              }
+        workout.exercises.forEach(exercise => {
+          if (selectedSubCategory === 'none' || exercise.exerciseName === selectedSubCategory) {
+            if (selectedMetric === 'sets') {
+              results[index] += exercise.sets.length;
+            } else {
+              exercise.sets.forEach(set => {
+                if (selectedMetric === 'reps') {
+                  results[index] += parseInt(set.reps, 10);
+                } else if (selectedMetric === 'weight') {
+                  results[index] += parseInt(set.weight, 10);
+                } else if (selectedMetric === 'time') {
+                  results[index] += 1;
+                }
+              });
             }
-          });
-        }
+          }
+        });
       }
     });
 
+    console.log("results is " + results.length);
     setData(results.map((total, idx) => ({
       x: getLabel(idx, selectedTimeFrame, start, totalWorkouts),
       y: total
     })));
-  }, [selectedMetric, selectedTimeFrame, selectedSubCategory, selectedSubject, userData]);
+  }, [selectedMetric, selectedTimeFrame, selectedSubCategory, userData]);
 
   return (
     <ScreenContainer>
@@ -209,7 +202,7 @@ export const StatsScreen = () => {
             <Picker.Item label="Weight" value="weight" />
             <Picker.Item label="Sets" value="sets" />
             <Picker.Item label="Time" value="time" />
-            <Picker.Item label="Category" value="category" />
+
           </Picker>
           <Picker
             selectedValue={selectedTimeFrame}
@@ -236,7 +229,7 @@ export const StatsScreen = () => {
           </Picker>
           <Picker
             selectedValue={selectedSubCategory}
-            onValueChange={(itemValue, itemIndex) => setSelectedSubCategory(itemValue)}
+            onValueChange={(itemValue) => setSelectedSubCategory(itemValue)}
             style={styles.picker}
           >
             {subCategories.map((name, index) => (
@@ -258,7 +251,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.offWhite,
     justifyContent: 'center',
     borderRadius: 13,
-
   },
   picker: {
     height: 30,
@@ -266,7 +258,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     backgroundColor: colors.primary,
     color: colors.offWhite,
-    
   },
   dropdownWrapper: {
     flexDirection: 'row',

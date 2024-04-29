@@ -6,6 +6,7 @@ import { Container } from "../components/Container";
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Button } from "../components/Button";
 import { AuthContext } from "../context/AuthContext";
+import { StatWidget } from "../components/StatWidget"
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
@@ -62,8 +63,7 @@ export const HomeScreen = () => {
       </Container>
 
       <Container style={styles.statsWrapper}>
-      {/*COLE START HERE----------------------------------------------------------- */}
-        <Text style={styles.text}>Stats</Text>
+        <StatWidget/>
       </Container>
     </ScreenContainer>
   );
