@@ -15,7 +15,12 @@ const calculateMonths = (start, end) => {
   return (endDate.getFullYear() - startDate.getFullYear()) * 12 + endDate.getMonth() - startDate.getMonth() + 1;
 };
 
-const getDateRange = (timeFrame, totalWorkouts, userData) => {
+function convertDate(input) {
+  const [month, day, year] = input.split('/');
+  return new Date(`${year}-${month}-${day}`);
+  }
+
+const getDateRange = (timeFrame, userData) => {
   const now = new Date();
   let start, end, points;
   switch (timeFrame) {
@@ -35,7 +40,7 @@ const getDateRange = (timeFrame, totalWorkouts, userData) => {
       points = 12; // Monthly data points to simplify UI
       break;
     case 'ever':
-      start = new Date(Math.min(...userData.workouts.map(workout => new Date(workout.date).getTime()))); // Gets first date in record
+      start = new Date(Math.min(...userData.workouts.map(workout => convertDate(workout.date).getTime()))); // Gets first date in record
       end = new Date();
       points = calculateMonths(start, end);
       break;
@@ -124,16 +129,18 @@ export const StatsScreen = () => {
 
   useEffect(() => {
     let newSubCategories = [];
-    if (selectedSubject === 'Workout') {
+    if (selectedSubject == 'workout') {
       // Extract workout names if that's the selected subject.
       newSubCategories = [...new Set(userData.workouts.map(workout => workout.workoutName))];
-    } else if (selectedSubject === 'Routine') {
+    } else if (selectedSubject == 'routine') {
       // Assuming routines are structured similarly within userData
       newSubCategories = [...new Set(userData.routines.map(routine => routine.name))];
-    } else if (selectedSubject === 'Exercise') {
+    } else if (selectedSubject == 'exercise') {
       // Extracting unique exercise names from all workouts
       newSubCategories = [...new Set(userData.workouts.flatMap(workout => workout.exercises.map(exercise => exercise.exerciseName)))];
-    }
+    } else if (selectedSubject == 'general') {
+      newSubCategories = [0];
+        }
     setSubCategories(newSubCategories);
     // Reset the selected subcategory when the subject changes
     setSelectedSubCategory(newSubCategories.length > 0 ? newSubCategories[0] : 'none');
@@ -141,25 +148,28 @@ export const StatsScreen = () => {
 
   useEffect(() => {
     const totalWorkouts = userData.workouts.length;
-    const { start, end, points } = getDateRange(selectedTimeFrame, totalWorkouts, userData);
+    console.log("totalWorkout size: " + totalWorkouts);
+    const { start, end, points } = getDateRange(selectedTimeFrame, userData);
+    console.log("start: " + start + ", end: " + end);
+    console.log("points: " + points)
     const results = new Array(points).fill(0);
 
     userData.workouts.forEach(workout => {
-      const workoutDate = new Date(workout.date);
+      const workoutDate = convertDate(workout.date)
       if (workoutDate >= start && workoutDate <= end) {
         let index = getIndex(workoutDate, start, userData.workouts, selectedTimeFrame);
 
         workout.exercises.forEach(exercise => {
-          if (selectedSubCategory === 'none' || exercise.exerciseName === selectedSubCategory) {
-            if (selectedMetric === 'sets') {
+          if (selectedSubCategory == 'none' || exercise.exerciseName == selectedSubCategory) {
+            if (selectedMetric == 'sets') {
               results[index] += exercise.sets.length;
             } else {
               exercise.sets.forEach(set => {
-                if (selectedMetric === 'reps') {
+                if (selectedMetric == 'reps') {
                   results[index] += parseInt(set.reps, 10);
-                } else if (selectedMetric === 'weight') {
+                } else if (selectedMetric == 'weight') {
                   results[index] += parseInt(set.weight, 10);
-                } else if (selectedMetric === 'time') {
+                } else if (selectedMetric == 'time') {
                   results[index] += 1;
                 }
               });
@@ -185,7 +195,7 @@ export const StatsScreen = () => {
               data={data}
               style={{ data: { stroke: colors.offWhite},
                       labels: { fill: colors.offWhite} }}
-              interpolation="natural"
+              interpolation="linear"
             />
             <VictoryAxis fixLabelOverlap={true} />
             <VictoryAxis dependentAxis />
