@@ -24,17 +24,17 @@ const getDateRange = (timeFrame, userData) => {
   const now = new Date();
   let start, end, points;
   switch (timeFrame) {
-    case '7 days':
+    case 'week':
       start = new Date(now.setDate(now.getDate() - 6)); // Last 7 days including today
       end = new Date();
       points = 7; // Basic choice, last 7 days
       break;
-    case '30 days':
+    case 'month':
       start = new Date(now.setDate(now.getDate() - 29)); // Last 30 days including today
       end = new Date();
       points = 30; // Shows 30 points for maximum accuracy
       break;
-    case '365 days':
+    case 'year':
       start = new Date(now.setFullYear(now.getFullYear() - 1, now.getMonth(), now.getDate() + 1)); // Last 365 days including today
       end = new Date();
       points = 12; // Monthly data points to simplify UI
@@ -89,12 +89,12 @@ const getLabel = (index, timeFrame, startDate, totalWorkouts) => {
   const newDate = new Date(startDate);
 
   switch (timeFrame) {
-    case '7 days':
-    case '30 days':
+    case 'week':
+    case 'month':
       newDate.setDate(newDate.getDate() + index);
-      label = `${newDate.getDate()}/${newDate.getMonth() + 1}`;
+      label = `${newDate.getMonth() + 1}/${newDate.getDate()}`;
       break;
-    case '365 days':
+    case 'year':
       newDate.setMonth(newDate.getMonth() + index);
       label = newDate.toLocaleString('default', { month: 'short' });
       break;
@@ -153,12 +153,12 @@ export const StatsScreen = () => {
     console.log("start: " + start + ", end: " + end);
     console.log("points: " + points)
     const results = new Array(points).fill(0);
-
+    //top level, grab from the userData, and get workouts
     userData.workouts.forEach(workout => {
       const workoutDate = convertDate(workout.date)
       if (workoutDate >= start && workoutDate <= end) {
         let index = getIndex(workoutDate, start, userData.workouts, selectedTimeFrame);
-
+        //
         workout.exercises.forEach(exercise => {
           if (selectedSubCategory == 'none' || exercise.exerciseName == selectedSubCategory) {
             if (selectedMetric == 'sets') {
@@ -184,6 +184,7 @@ export const StatsScreen = () => {
       x: getLabel(idx, selectedTimeFrame, start, totalWorkouts),
       y: total
     })));
+    
   }, [selectedMetric, selectedTimeFrame, selectedSubCategory, userData]);
 
   return (
@@ -193,12 +194,14 @@ export const StatsScreen = () => {
           <VictoryChart width={screenWidth - 20} height={340}>
             <VictoryLine
               data={data}
-              style={{ data: { stroke: colors.offWhite},
+              style={{ data: { stroke: colors.primary},
                       labels: { fill: colors.offWhite} }}
               interpolation="linear"
             />
             <VictoryAxis fixLabelOverlap={true} />
-            <VictoryAxis dependentAxis />
+            <VictoryAxis dependentAxis 
+            fixLabelOverlap={true} 
+            tickFormat={(tick) => Number(tick).toString()}/>
           </VictoryChart>
         </View>
         <View >
@@ -219,7 +222,6 @@ export const StatsScreen = () => {
             onValueChange={(itemValue, itemIndex) => setSelectedTimeFrame(itemValue)}
             style={styles.picker}
           >
-            <Picker.Item label="Day" value="day" />
             <Picker.Item label="Week" value="week" />
             <Picker.Item label="Month" value="month" />
             <Picker.Item label="Year" value="year" />
