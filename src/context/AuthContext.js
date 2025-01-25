@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   const login = (email, password, setPassword) => {
     setIsLoading(true);
     return axios
-      .post(`https://login-yet5ypcxwq-uc.a.run.app`, { email, password })
+      .post(`https://login-zyge75dkqq-uc.a.run.app`, { email, password })
       .then((res) => {
         const userInfo = res.data;
         setUserInfo(userInfo);
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
   ) => {
     setIsLoading(true);
     return axios
-      .post(`https://signup-yet5ypcxwq-uc.a.run.app`, {
+      .post(`https://signup-zyge75dkqq-uc.a.run.app`, {
         email,
         displayName,
         password,
@@ -93,7 +93,7 @@ export const AuthProvider = ({ children }) => {
 
   const getUserData = (uid) => {
     return axios
-      .post(`https://getuserdata-yet5ypcxwq-uc.a.run.app`, { uid })
+      .post(`https://getuserdata-zyge75dkqq-uc.a.run.app`, { uid })
       .then((res) => {
         setUserData(res.data);
         AsyncStorage.setItem("userData", JSON.stringify(res.data));
@@ -121,7 +121,7 @@ export const AuthProvider = ({ children }) => {
       updateData.weight = weight;
     }
     return axios
-      .post(`https://updateprofile-yet5ypcxwq-uc.a.run.app`, {
+      .post(`https://updateprofile-zyge75dkqq-uc.a.run.app`, {
         uid: userToken,
         updateData,
       })
@@ -144,7 +144,7 @@ export const AuthProvider = ({ children }) => {
   const addWorkout = (workout) => {
     setIsLoading(true);
     return axios
-      .post(`https://addworkout-yet5ypcxwq-uc.a.run.app`, {
+      .post(`https://addworkout-zyge75dkqq-uc.a.run.app`, {
         uid: userToken,
         workout,
       })
@@ -168,7 +168,7 @@ export const AuthProvider = ({ children }) => {
   const deleteWorkout = (workout) => {
     setIsLoading(true);
     return axios
-      .post(`https://deleteworkout-yet5ypcxwq-uc.a.run.app`, {
+      .post(`https://deleteworkout-zyge75dkqq-uc.a.run.app`, {
         uid: userToken,
         workout,
       })

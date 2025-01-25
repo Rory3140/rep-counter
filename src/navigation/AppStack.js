@@ -9,7 +9,6 @@ import { DisplayWorkoutScreen } from "../screens/DisplayWorkoutScreen";
 import { WorkoutScreen } from "../screens/WorkoutScreen";
 import { RoutinesScreen } from "../screens/RoutinesScreen";
 import { CreateRoutineScreen } from "../screens/CreateRoutineScreen";
-import { StatsScreen } from "../screens/StatsScreen";
 import { ProfileScreen } from "../screens/ProfileScreen";
 import { TitleBar } from "../components/TitleBar";
 
@@ -17,7 +16,6 @@ import HomeIcon from "../../assets/icons/home";
 import LogIcon from "../../assets/icons/log";
 import WorkoutIcon from "../../assets/icons/dumbell";
 import RoutinesIcon from "../../assets/icons/repeat";
-import StatsIcon from "../../assets/icons/graph";
 
 import { colors } from "../utils/colors";
 
@@ -107,15 +105,6 @@ export const AppStack = () => {
             <RoutinesIcon width={50} height={50} fill={color} />
           ),
           headerShown: false,
-        }}
-      />
-      <Tab.Screen
-        name="Stats"
-        component={StatsScreen}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <StatsIcon width={50} height={50} fill={color} />
-          ),
         }}
       />
       <Tab.Screen

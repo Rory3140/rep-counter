@@ -6,7 +6,6 @@ import { Container } from "../components/Container";
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Button } from "../components/Button";
 import { AuthContext } from "../context/AuthContext";
-import { StatWidget } from "../components/StatWidget"
 
 import { colors } from "../utils/colors";
 import { sizes, fontSizes } from "../utils/sizes";
@@ -45,14 +44,6 @@ export const HomeScreen = () => {
         </Text>
       </Container>
 
-      <Container>
-        <Text style={styles.text}>Quick Workout</Text>
-        <Button
-          label="Start Workout"
-          onPress={() => navigation.navigate("Workout")}
-        />
-      </Container>
-
       <Container style={styles.quoteOfTheDayWrapper}>
         <Text style={styles.text}>Quote of the Day</Text>
         <Text
@@ -62,8 +53,12 @@ export const HomeScreen = () => {
         </Text>
       </Container>
 
-      <Container style={styles.statsWrapper}>
-        <StatWidget/>
+      <Container>
+        <Text style={styles.text}>Quick Workout</Text>
+        <Button
+          label="Start Workout"
+          onPress={() => navigation.navigate("Workout")}
+        />
       </Container>
     </ScreenContainer>
   );
