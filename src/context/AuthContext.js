@@ -192,6 +192,55 @@ export const AuthProvider = ({ children }) => {
       });
   };
 
+  const addRoutine = (routine) => {
+    setIsLoading(true);
+    return axios
+      .post(`https://addroutine-zyge75dkqq-uc.a.run.app`, {
+        uid: userToken,
+        routine,
+      })
+      .then((res) => {
+        let newUserData = userData;
+        newUserData.routines.push(routine);
+        setUserData(newUserData);
+  
+        AsyncStorage.setItem("userData", JSON.stringify(newUserData));
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+        console.log(err.response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+  
+  const deleteRoutine = (routine) => {
+    setIsLoading(true);
+    return axios
+      .post(`https://deleteroutine-zyge75dkqq-uc.a.run.app`, {
+        uid: userToken,
+        routine,
+      })
+      .then((res) => {
+        let newUserData = userData;
+        const newRoutines = newUserData.routines.filter(
+          (item) => item !== routine
+        );
+        newUserData.routines = newRoutines;
+  
+        setUserData(newUserData);
+        AsyncStorage.setItem("userData", JSON.stringify(newUserData));
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
+        console.log(err.response.data);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };  
+
   function stringToDate(dateString) {
     const [month, day, year] = dateString.split("/");
     return new Date(year, month - 1, day);
@@ -287,6 +336,8 @@ export const AuthProvider = ({ children }) => {
         updateProfile,
         addWorkout,
         deleteWorkout,
+        addRoutine,
+        deleteRoutine,
         logout,
         userToken,
         userInfo,

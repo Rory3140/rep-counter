@@ -6,7 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 
 import { ScreenContainer } from "../components/ScreenContainer";
 import { Container } from "../components/Container";
@@ -20,6 +20,7 @@ export const CreateRoutineScreen = () => {
   const [workoutName, setWorkoutName] = useState("");
   const [exercises, setExercises] = useState([]);
 
+  const { addRoutine } = useContext(AuthContext); // Accessing addRoutine from context
   const navigation = useNavigation();
 
   const addExercise = () => {
@@ -30,14 +31,21 @@ export const CreateRoutineScreen = () => {
     setExercises([...exercises, newExercise]);
   };
 
-  const createRoutine = () => {
+  const createRoutine = async () => {
     const routine = {
       workoutName,
       exercises,
     };
-    navigation.navigate("Routines", {
-      createdRoutine: routine,
-    });
+
+    try {
+      await addRoutine(routine); // Calling addRoutine from AuthContext
+      navigation.navigate("Routines", {
+        createdRoutine: routine,
+      });
+        } catch (error) {
+      alert("Failed to create routine. Please try again.");
+      console.error(error);
+    }
   };
 
   return (
@@ -76,35 +84,31 @@ export const CreateRoutineScreen = () => {
             />
           </Container>
 
-          <>
-            <TouchableOpacity
-              onPress={() => {
-                const updatedExercises = [...exercises];
-                updatedExercises.splice(index, 1);
-                setExercises(updatedExercises);
-              }}
-            >
-              <Text style={styles.textButton}>Delete Exercise</Text>
-            </TouchableOpacity>
-          </>
+          <TouchableOpacity
+            onPress={() => {
+              const updatedExercises = [...exercises];
+              updatedExercises.splice(index, 1);
+              setExercises(updatedExercises);
+            }}
+          >
+            <Text style={styles.textButton}>Delete Exercise</Text>
+          </TouchableOpacity>
         </Container>
       ))}
 
-      <>
-        <Button
-          label={"Add Exercise"}
-          onPress={() => {
-            addExercise();
-          }}
-        />
+      <Button
+        label={"Add Exercise"}
+        onPress={() => {
+          addExercise();
+        }}
+      />
 
-        <Button
-          label={"Create Routine"}
-          onPress={() => {
-            createRoutine();
-          }}
-        />
-      </>
+      <Button
+        label={"Create Routine"}
+        onPress={() => {
+          createRoutine();
+        }}
+      />
     </ScreenContainer>
   );
 };
@@ -113,7 +117,7 @@ const styles = StyleSheet.create({
   textbox: {
     display: "flex",
     flexDirection: "row",
-    boarderwidth: 1,
+    borderWidth: 1,
     width: "98%",
     height: 50,
     margin: 5,
